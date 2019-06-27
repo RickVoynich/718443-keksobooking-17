@@ -53,11 +53,11 @@ mapBlock.classList.remove('map--faded');
 var pinListElement = mapBlock.querySelector('.map__pins');
 var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-var renderPin = function (pinArray) {
+var renderPin = function (pin) {
   var pinElement = pinPointTemplate.cloneNode(true);
-  pinElement.querySelector('img').src = pinArray.author.avatar;
-  pinElement.querySelector('img').alt = pinArray.offer.type;
-  pinElement.style = 'left: ' + pinArray.location.x + 'px;' + 'top: ' + pinArray.location.y + 'px';
+  pinElement.querySelector('img').src = pin.author.avatar;
+  pinElement.querySelector('img').alt = pin.offer.type;
+  pinElement.style = 'left: ' + pin.location.x + 'px;' + 'top: ' + pin.location.y + 'px';
   return pinElement;
 };
 
