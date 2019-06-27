@@ -2,7 +2,7 @@
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
-}
+};
 
 var PIN_QUANTITY = 8;
 var MAX_Y = 630;
@@ -23,24 +23,24 @@ var fillPin = function (avatar, type, x, y) {
       'x': x,
       'y': y
     }
-  }
-}
+  };
+};
 
 var getAvatar = function (i) {
   return 'img/avatars/user0' + (i + 1) + '.png';
-}
+};
 var getType = function () {
   var types = ['palace', 'flat', 'house', 'bungalo'];
   return types[getRandomInt(0, types.length)];
-}
+};
 
 var getX = function (minX, maxX) {
   return getRandomInt(minX, maxX);
-}
+};
 
 var getY = function (minY, maxY) {
   return getRandomInt(minY, maxY);
-}
+};
 
 var pins = [];
 for (var i = 0; i < PIN_QUANTITY; i++) {
