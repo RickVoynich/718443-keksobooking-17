@@ -50,7 +50,6 @@ for (var i = 0; i < PIN_QUANTITY; i++) {
 var mapBlock = document.querySelector('.map');
 mapBlock.classList.remove('map--faded');
 
-// Создает DOM-элементы, заполняет их данными из массива.
 var pinListElement = mapBlock.querySelector('.map__pins');
 var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -62,12 +61,9 @@ var renderPin = function (pins) {
   return pinElement;
 };
 
-// 4. Отрисуйте сгенерированные DOM-элементы в блок .map__pins. Для вставки элементов используйте DocumentFragment.
+var fragment = document.createDocumentFragment();
 
-
-// Требования к коду
-// Код должен быть разделён на отдельные функции.
-// Стоит отдельно объявить функцию генерации случайных данных,
-// функцию создания DOM-элемента на основе JS-объекта,
-// функцию заполнения блока DOM-элементами на основе массива JS-объектов.
-// Пункты задания примерно соответствуют функциям, которые вы должны создать.
+for (var j = 0; j < pins.length; j++) {
+  fragment.appendChild(renderPin(pins[j]));
+}
+pinListElement.appendChild(fragment);
