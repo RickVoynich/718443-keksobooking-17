@@ -90,7 +90,7 @@ addDisabled(fieldsetAdForm);
 addDisabled(mapFilter);
 addDisabled(mapFeatures);
 
-var mapPin = document.querySelector('.map__pin');
+var mapPin = document.querySelector('.map__pin--main');
 
 var onMapPinClick = function () {
   adForm.classList.remove('ad-form--disabled');
