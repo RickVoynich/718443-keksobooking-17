@@ -111,7 +111,7 @@ var pinMainCoords = {
 };
 
 var setAddress = function (coordinates) {
-  addressField.value = coordinates.x + ', ' + coordinates.y ;
+  addressField.value = coordinates.x + ', ' + coordinates.y;
 };
 
 setAddress(pinMainCoords); // Дефолтные координаты пина при загрузке страницы
