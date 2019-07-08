@@ -29,6 +29,7 @@ var fillPin = function (avatar, type, x, y) {
 var getAvatar = function (i) {
   return 'img/avatars/user0' + (i + 1) + '.png';
 };
+
 var getType = function () {
   var types = ['palace', 'flat', 'house', 'bungalo'];
   return types[getRandomInt(0, types.length)];
@@ -47,10 +48,8 @@ for (var i = 0; i < PIN_QUANTITY; i++) {
   pins.push(fillPin(getAvatar(i), getType(), getX(MIN_X, MAX_X - PIN_SIZE / 2), getY(MIN_Y, MAX_Y - PIN_SIZE)));
 }
 
-var mapBlock = document.querySelector('.map');
-mapBlock.classList.remove('map--faded');
-
-var pinListElement = mapBlock.querySelector('.map__pins');
+var map = document.querySelector('.map');
+var pinListElement = map.querySelector('.map__pins');
 var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
 var renderPin = function (pin) {
@@ -63,7 +62,62 @@ var renderPin = function (pin) {
 
 var fragment = document.createDocumentFragment();
 
-for (var j = 0; j < pins.length; j++) {
-  fragment.appendChild(renderPin(pins[j]));
-}
-pinListElement.appendChild(fragment);
+var renderAllPins = function (array) {
+  for (var j = 0; j < array.length; j++) {
+    fragment.appendChild(renderPin(array[j]));
+  }
+  pinListElement.appendChild(fragment);
+};
+
+var adForm = document.querySelector('.ad-form');
+var fieldsetAdForm = adForm.querySelectorAll('fieldset');
+var mapFilter = map.querySelectorAll('.map__filter');
+var mapFeatures = map.querySelectorAll('.map__features');
+
+var addDisabled = function (element) {
+  for (var i = 0; i < element.length; i++) {
+    element[i].setAttribute('disabled', 'disabled');
+  }
+};
+
+var removeDisabled = function (element) {
+  for (var i = 0; i < element.length; i++) {
+    element[i].removeAttribute('disabled');
+  }
+};
+
+addDisabled(fieldsetAdForm);
+addDisabled(mapFilter);
+addDisabled(mapFeatures);
+
+var mapPin = document.querySelector('.map__pin--main');
+
+var onMapPinClick = function () {
+  adForm.classList.remove('ad-form--disabled');
+  map.classList.remove('map--faded');
+  renderAllPins(pins);
+  removeDisabled(fieldsetAdForm);
+  removeDisabled(mapFilter);
+  removeDisabled(mapFeatures);
+};
+
+mapPin.addEventListener('click', onMapPinClick);
+
+var addressField = adForm.querySelector('#address');
+
+var pinMainCoords = {
+  x: parseInt(mapPin.style.left),
+  y: parseInt(mapPin.style.top)
+};
+
+var setAddress = function (coordinates) {
+  addressField.value = coordinates.x + ', ' + coordinates.y;
+};
+
+setAddress(pinMainCoords); // Дефолтные координаты пина при загрузке страницы
+
+var onMapPinMouseUp = function () {
+  setAddress(pinMainCoords);
+};
+
+mapPin.addEventListener('mouseup', onMapPinMouseUp);
