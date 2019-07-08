@@ -102,3 +102,22 @@ var onMapPinClick = function () {
 };
 
 mapPin.addEventListener('click', onMapPinClick);
+
+var addressField = adForm.querySelector('#address');
+
+var pinMainCoords = {
+  x: parseInt(mapPin.style.left),
+  y: parseInt(mapPin.style.top)
+};
+
+var setAddress = function (coordinates) {
+  addressField.value = coordinates.x + ', ' + coordinates.y ;
+};
+
+setAddress(pinMainCoords); // Дефолтные координаты пина при загрузке страницы
+
+var onMapPinMouseUp = function () {
+  setAddress(pinMainCoords);
+};
+
+mapPin.addEventListener('mouseup', onMapPinMouseUp);
