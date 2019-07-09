@@ -76,13 +76,13 @@ var mapFeatures = map.querySelectorAll('.map__features');
 
 var addDisabled = function (element) {
   for (var i = 0; i < element.length; i++) {
-    element[i].setAttribute('disabled', 'disabled');
+    element[i].disabled = true;
   }
 };
 
 var removeDisabled = function (element) {
   for (var i = 0; i < element.length; i++) {
-    element[i].removeAttribute('disabled');
+    element[i].disabled = false;
   }
 };
 
@@ -103,7 +103,7 @@ var onMapPinClick = function () {
 
 mapPin.addEventListener('click', onMapPinClick);
 
-var addressField = adForm.querySelector('#address');
+var address = adForm.querySelector('#address');
 
 var pinMainCoords = {
   x: parseInt(mapPin.style.left),
@@ -111,7 +111,7 @@ var pinMainCoords = {
 };
 
 var setAddress = function (coordinates) {
-  addressField.value = coordinates.x + ', ' + coordinates.y;
+  address.value = coordinates.x + ', ' + coordinates.y;
 };
 
 setAddress(pinMainCoords); // Дефолтные координаты пина при загрузке страницы
