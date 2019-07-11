@@ -105,19 +105,36 @@ mapPin.addEventListener('click', onMapPinClick);
 
 var address = adForm.querySelector('#address');
 
-var pinMainCoords = {
-  x: parseInt(mapPin.style.left),
-  y: parseInt(mapPin.style.top)
+var getPinMainCoords = function () {
+  return {
+    x: parseInt(mapPin.style.left),
+    y: parseInt(mapPin.style.top)
+  }
 };
 
 var setAddress = function (coordinates) {
   address.value = coordinates.x + ', ' + coordinates.y;
 };
 
-setAddress(pinMainCoords); // Дефолтные координаты пина при загрузке страницы
+setAddress(getPinMainCoords()); // Дефолтные координаты пина при загрузке страницы
 
 var onMapPinMouseUp = function () {
-  setAddress(pinMainCoords);
+  setAddress(getPinMainCoords());
 };
 
 mapPin.addEventListener('mouseup', onMapPinMouseUp);
+
+var syncTimein = function () {
+  var timeInSelect = document.querySelector('#timein');
+  var timeOutSelect = document.querySelector('#timeout');
+  var timeSelects = [timeInSelect, timeOutSelect];
+
+  timeSelects.forEach(function (currentSelect) {
+    currentSelect.addEventListener('change', function () {
+      var dependentSelect = (currentSelect === timeInSelect) ? timeOutSelect : timeInSelect;
+      dependentSelect.value = currentSelect.value;
+    });
+  });
+};
+
+syncTimein();
