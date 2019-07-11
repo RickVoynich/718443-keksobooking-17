@@ -124,17 +124,22 @@ var onMapPinMouseUp = function () {
 
 mapPin.addEventListener('mouseup', onMapPinMouseUp);
 
-var syncTimein = function () {
-  var timeInSelect = document.querySelector('#timein');
-  var timeOutSelect = document.querySelector('#timeout');
-  var timeSelects = [timeInSelect, timeOutSelect];
+var houseTypes = document.querySelector('#type');
+var housePriceInput = document.querySelector('#price');
 
-  timeSelects.forEach(function (currentSelect) {
-    currentSelect.addEventListener('change', function () {
-      var dependentSelect = (currentSelect === timeInSelect) ? timeOutSelect : timeInSelect;
-      dependentSelect.value = currentSelect.value;
-    });
-  });
+var MIN_PRICES = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
 };
 
-syncTimein();
+var setMinPriceValue = function (houseType) {
+  var minPrice = MIN_PRICES[houseType];
+  housePriceInput.min = minPrice;
+  housePriceInput.placeholder = minPrice;
+};
+
+houseTypes.addEventListener('change', function () {
+  setMinPriceValue(houseTypes.value);
+});
