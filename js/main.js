@@ -143,3 +143,14 @@ var setMinPriceValue = function (houseType) {
 houseTypes.addEventListener('change', function () {
   setMinPriceValue(houseTypes.value);
 });
+
+var timeInSelect = document.querySelector('#timein');
+var timeOutSelect = document.querySelector('#timeout');
+
+timeInSelect.addEventListener('change', function () {
+  timeOutSelect.value = timeInSelect.value;
+});
+
+timeOutSelect.addEventListener('change', function () {
+  timeInSelect.value = timeOutSelect.value;
+});
