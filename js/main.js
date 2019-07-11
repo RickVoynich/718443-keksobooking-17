@@ -75,14 +75,14 @@ var mapFilter = map.querySelectorAll('.map__filter');
 var mapFeatures = map.querySelectorAll('.map__features');
 
 var addDisabled = function (element) {
-  for (var i = 0; i < element.length; i++) {
-    element[i].setAttribute('disabled', 'disabled');
+  for (i = 0; i < element.length; i++) {
+    element[i].disabled = true;
   }
 };
 
 var removeDisabled = function (element) {
-  for (var i = 0; i < element.length; i++) {
-    element[i].removeAttribute('disabled');
+  for (i = 0; i < element.length; i++) {
+    element[i].disabled = false;
   }
 };
 
@@ -103,21 +103,54 @@ var onMapPinClick = function () {
 
 mapPin.addEventListener('click', onMapPinClick);
 
-var addressField = adForm.querySelector('#address');
+var address = adForm.querySelector('#address');
 
-var pinMainCoords = {
-  x: parseInt(mapPin.style.left),
-  y: parseInt(mapPin.style.top)
+var getPinMainCoords = function () {
+  return {
+    x: parseInt(mapPin.style.left, 10),
+    y: parseInt(mapPin.style.top, 10)
+  };
 };
 
 var setAddress = function (coordinates) {
-  addressField.value = coordinates.x + ', ' + coordinates.y;
+  address.value = coordinates.x + ', ' + coordinates.y;
 };
 
-setAddress(pinMainCoords); // Дефолтные координаты пина при загрузке страницы
+setAddress(getPinMainCoords()); // Дефолтные координаты пина при загрузке страницы
 
 var onMapPinMouseUp = function () {
-  setAddress(pinMainCoords);
+  setAddress(getPinMainCoords());
 };
 
 mapPin.addEventListener('mouseup', onMapPinMouseUp);
+
+var houseTypes = document.querySelector('#type');
+var housePriceInput = document.querySelector('#price');
+
+var MIN_PRICES = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
+
+var setMinPriceValue = function (houseType) {
+  var minPrice = MIN_PRICES[houseType];
+  housePriceInput.min = minPrice;
+  housePriceInput.placeholder = minPrice;
+};
+
+houseTypes.addEventListener('change', function () {
+  setMinPriceValue(houseTypes.value);
+});
+
+var timeInSelect = document.querySelector('#timein');
+var timeOutSelect = document.querySelector('#timeout');
+
+timeInSelect.addEventListener('change', function () {
+  timeOutSelect.value = timeInSelect.value;
+});
+
+timeOutSelect.addEventListener('change', function () {
+  timeInSelect.value = timeOutSelect.value;
+});
