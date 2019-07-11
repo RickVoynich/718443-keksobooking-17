@@ -75,13 +75,13 @@ var mapFilter = map.querySelectorAll('.map__filter');
 var mapFeatures = map.querySelectorAll('.map__features');
 
 var addDisabled = function (element) {
-  for (var i = 0; i < element.length; i++) {
+  for (i = 0; i < element.length; i++) {
     element[i].disabled = true;
   }
 };
 
 var removeDisabled = function (element) {
-  for (var i = 0; i < element.length; i++) {
+  for (i = 0; i < element.length; i++) {
     element[i].disabled = false;
   }
 };
@@ -107,9 +107,9 @@ var address = adForm.querySelector('#address');
 
 var getPinMainCoords = function () {
   return {
-    x: parseInt(mapPin.style.left),
-    y: parseInt(mapPin.style.top)
-  }
+    x: parseInt(mapPin.style.left, 10),
+    y: parseInt(mapPin.style.top, 10)
+  };
 };
 
 var setAddress = function (coordinates) {
