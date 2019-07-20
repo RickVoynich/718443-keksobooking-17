@@ -191,6 +191,8 @@ var setMinPriceValue = function (houseType) {
   housePriceInput.placeholder = minPrice;
 };
 
+setMinPriceValue(houseTypes.value);
+
 houseTypes.addEventListener('change', function () {
   setMinPriceValue(houseTypes.value);
 });
