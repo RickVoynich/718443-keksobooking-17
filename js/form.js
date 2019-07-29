@@ -1,6 +1,28 @@
 'use strict';
 
 (function () {
+  var map = document.querySelector('.map');
+  var adForm = document.querySelector('.ad-form');
+  var fieldsetAdForm = adForm.querySelectorAll('fieldset');
+  var mapFilter = map.querySelectorAll('.map__filter');
+  var mapFeatures = map.querySelectorAll('.map__features');
+
+  window.util.addDisabled(fieldsetAdForm);
+  window.util.addDisabled(mapFilter);
+  window.util.addDisabled(mapFeatures);
+
+  var unblockForm = function () {
+    adForm.classList.remove('ad-form--disabled');
+    map.classList.remove('map--faded');
+    window.util.removeDisabled(fieldsetAdForm);
+    window.util.removeDisabled(mapFilter);
+    window.util.removeDisabled(mapFeatures);
+  };
+
+  var address = adForm.querySelector('#address');
+  var setAddress = function (coordinates) {
+    address.value = coordinates.x + ', ' + coordinates.y;
+  };
 
   var houseTypes = document.querySelector('#type');
   var housePriceInput = document.querySelector('#price');
@@ -34,5 +56,12 @@
   timeOutSelect.addEventListener('change', function () {
     timeInSelect.value = timeOutSelect.value;
   });
+
+  window.form = {
+    map: map,
+    adForm: adForm,
+    setAddress: setAddress,
+    unblockForm: unblockForm
+  };
 
 })();
