@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var map = document.querySelector('.map');
+
   var mapPin = document.querySelector('.map__pin--main');
 
   var setPinDefaultCoords = function (element) {

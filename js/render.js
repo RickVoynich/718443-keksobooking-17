@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var map = document.querySelector('.map');
   var PIN_QUANTITY = 5;
   var pinListElement = document.querySelector('.map__pins');
@@ -56,7 +57,7 @@
       case 'palace':
         typeHouse = 'Дворец';
         break;
-    };
+    }
     cardElement.querySelector('.popup__type').textContent = typeHouse;
     cardElement.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
@@ -65,7 +66,7 @@
     featuresHouse.innerHTML = '';
     for (var i = 0; i < card.offer.features.length; i++) {
       featuresHouse.innerHTML += '<li class="popup__feature popup__feature--' + card.offer.features[i] + '"></li>';
-    };
+    }
 
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
 
