@@ -22,7 +22,9 @@
     MIN_X: 0,
     MAX_X: document.querySelector('.map__pins').clientWidth,
     PIN_SIZE: 65,
-    PIN_TAIL_SIZE: 18
+    PIN_TAIL_SIZE: 18,
+    ESC_KEYCODE: 27,
+    ENTER_KEYCODE: 13
   };
 
 })();

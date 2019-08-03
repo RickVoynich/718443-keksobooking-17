@@ -24,6 +24,7 @@
   var pins = [];
   var startLoadPins = function () {
     window.render.renderPins(pins);
+    window.render.renderCards(pins);
   };
 
   // получение данных с сервера
