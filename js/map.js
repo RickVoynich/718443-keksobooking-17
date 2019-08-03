@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-
+  var map = document.querySelector('.map');
   var mapPin = document.querySelector('.map__pin--main');
 
   var setPinDefaultCoords = function (element) {
@@ -24,6 +24,7 @@
   var pins = [];
   var startLoadPins = function () {
     window.render.renderPins(pins);
+    window.render.renderCards(pins);
   };
 
   // получение данных с сервера
