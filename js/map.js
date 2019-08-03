@@ -34,7 +34,7 @@
   });
 
   // Ошибка соединения с сервером
-  var errorHandler = function (errorMessage) {
+  var errorHandler = function () {
     var main = document.querySelector('main');
     var notice = document.querySelector('.notice');
 
@@ -47,9 +47,8 @@
   };
 
   // Активация карты и загрузка пинов
-   var pageActivation = function () {
+  var pageActivation = function () {
     window.form.unblockForm();
-
     window.backend.load(successHandler, errorHandler);
   };
 

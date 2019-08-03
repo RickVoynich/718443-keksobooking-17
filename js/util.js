@@ -2,7 +2,7 @@
 
 (function () {
 
-var addDisabled = function (elem) {
+  var addDisabled = function (elem) {
     for (var i = 0; i < elem.length; i++) {
       elem[i].disabled = true;
     }

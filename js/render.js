@@ -5,7 +5,6 @@
   var PIN_QUANTITY = 5;
   var pinListElement = document.querySelector('.map__pins');
   var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var pins = [];
 
   // рендер пинов
   var renderPin = function (pin) {
