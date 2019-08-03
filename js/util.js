@@ -2,10 +2,6 @@
 
 (function () {
 
-  var getRandomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
-
   var addDisabled = function (elem) {
     for (var i = 0; i < elem.length; i++) {
       elem[i].disabled = true;
@@ -19,7 +15,6 @@
   };
 
   window.util = {
-    getRandomInt: getRandomInt,
     addDisabled: addDisabled,
     removeDisabled: removeDisabled,
     MAX_Y: 630,

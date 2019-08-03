@@ -20,9 +20,36 @@
     };
   };
 
+  // отрисовка пинов при активации
+  var pins = [];
+  var startLoadPins = function () {
+    window.render.renderPins(pins);
+  };
+
+  // получение данных с сервера
+  var successHandler = (function (data) {
+    pins = data;
+    startLoadPins();
+    window.pins = pins;
+  });
+
+  // Ошибка соединения с сервером
+  var errorHandler = function () {
+    var main = document.querySelector('main');
+    var notice = document.querySelector('.notice');
+
+    var errorMessage = document.querySelector('#error')
+      .content
+      .querySelector('.error')
+      .cloneNode(true);
+
+    main.insertBefore(errorMessage, notice);
+  };
+
+  // Активация карты и загрузка пинов
   var pageActivation = function () {
     window.form.unblockForm();
-    window.backend.load(window.pins.renderAllPins);
+    window.backend.load(successHandler, errorHandler);
   };
 
   mapPin.addEventListener('mousedown', function (evt) {
