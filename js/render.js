@@ -7,10 +7,12 @@
   var pinListElement = document.querySelector('.map__pins');
   var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var mapFilter = map.querySelector('.map__filters-container');
 
   // рендер пинов
   var renderPin = function (pin) {
     var pinElement = pinPointTemplate.cloneNode(true);
+    pinElement.id = 'pin-' + pin.id;
     pinElement.querySelector('img').src = pin.author.avatar;
     pinElement.querySelector('img').alt = pin.offer.type;
     pinElement.style = 'left: ' + pin.location.x + 'px;' + 'top: ' + pin.location.y + 'px';
@@ -19,12 +21,10 @@
 
   // отрисовка пинов
   var renderPins = function (array) {
-    var fragment = document.createDocumentFragment();
-
-    for (var j = 0; j < PIN_QUANTITY; j++) {
-      fragment.appendChild(renderPin(array[j]));
+    var pinsNumber = array.length > PIN_QUANTITY ? PIN_QUANTITY : array.length;
+    for (var i = 0; i < pinsNumber; i++) {
+      pinListElement.appendChild(renderPin(array[i]));
     }
-    pinListElement.appendChild(fragment);
   };
 
   // удаление пинов
@@ -83,12 +83,8 @@
   };
 
   // отрисовка карточки
-  var mapFilter = map.querySelector('.map__filters-container');
   var renderCards = function (array) {
-    var fragment = document.createDocumentFragment();
-    fragment.appendChild(renderCard(array[0]));
-
-    mapFilter.after(fragment);
+    mapFilter.after(renderCard(array));
   };
 
   // удаление карточки
