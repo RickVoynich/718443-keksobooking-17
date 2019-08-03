@@ -4,15 +4,6 @@
   var map = document.querySelector('.map');
   var mapPin = document.querySelector('.map__pin--main');
 
-  var setPinDefaultCoords = function (element) {
-    return {
-      x: element.offsetLeft + Math.round(window.util.PIN_SIZE / 2),
-      y: element.offsetTop + Math.round(window.util.PIN_SIZE / 2)
-    };
-  };
-
-  window.form.setAddress(setPinDefaultCoords(mapPin));
-
   var setPinMainCoords = function (elem) {
     return {
       x: parseInt(elem.style.left, 10) + Math.round(window.util.PIN_SIZE / 2),
