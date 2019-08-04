@@ -88,6 +88,6 @@
 
   for (var i = 0; i < selectHousingFeatures.length; i++) {
     selectHousingFeatures[i].addEventListener('click', debounce(updatePins));
-  };
+  }
 
 })();

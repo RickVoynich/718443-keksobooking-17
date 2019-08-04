@@ -10,20 +10,20 @@
   var mapFilter = map.querySelector('.map__filters-container');
 
   var renderPin = function (pin) {
-    if (typeof pin.offer !== 'undefined') {
-      var pinElement = pinPointTemplate.cloneNode(true);
-      pinElement.id = 'pin-' + pin.id;
-      pinElement.querySelector('img').src = pin.author.avatar;
-      pinElement.querySelector('img').alt = pin.offer.type;
-      pinElement.style = 'left: ' + pin.location.x + 'px;' + 'top: ' + pin.location.y + 'px';
-      return pinElement;
-    }
+    var pinElement = pinPointTemplate.cloneNode(true);
+    pinElement.id = 'pin-' + pin.id;
+    pinElement.querySelector('img').src = pin.author.avatar;
+    pinElement.querySelector('img').alt = pin.offer.type;
+    pinElement.style = 'left: ' + pin.location.x + 'px;' + 'top: ' + pin.location.y + 'px';
+    return pinElement;
   };
 
   var renderPins = function (array) {
     var pinsNumber = array.length > PIN_QUANTITY ? PIN_QUANTITY : array.length;
     for (var i = 0; i < pinsNumber; i++) {
-      pinListElement.appendChild(renderPin(array[i]));
+      if (typeof array[i].offer !== 'undefined') {
+        pinListElement.appendChild(renderPin(array[i]));
+      }
     }
   };
 
