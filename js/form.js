@@ -34,7 +34,6 @@
     address.value = coordinates.x + ', ' + coordinates.y;
   };
 
-
   var setPinDefaultCoords = function () {
     return {
       x: defaultCoordsX + Math.round(window.util.PIN_SIZE / 2),
@@ -87,7 +86,6 @@
     '100': ['0']
   };
 
-
   var roomSelectChange = function () {
     var rooms = roomSelect.value;
     var capacity = capacitySelect.value;
@@ -110,7 +108,6 @@
     window.render.removePins();
     window.render.removeCard();
   };
-
 
   var resetButton = adForm.querySelector('.ad-form__reset');
   resetButton.addEventListener('click', resetAdForm);
