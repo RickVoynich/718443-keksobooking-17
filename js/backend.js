@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var GET_URL = 'https://js.dump.academy/keksobooking/data';
   var POST_URL = 'https://js.dump.academy/keksobooking';
 
