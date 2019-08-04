@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var map = document.querySelector('.map');
+
   var mapPin = document.querySelector('.map__pin--main');
+  var mapPins = document.querySelector('.map__pins');
 
   var setPinMainCoords = function (elem) {
     return {
@@ -11,13 +12,11 @@
     };
   };
 
-  // отрисовка пинов при активации
   var pins = [];
   var startLoadPins = function () {
     window.render.renderPins(pins);
   };
 
-  // получение данных с сервера
   var successHandler = (function (data) {
     pins = data;
     for (var i = 0; i < pins.length; i++) {
@@ -27,7 +26,6 @@
     startLoadPins();
   });
 
-  // Ошибка соединения с сервером
   var errorHandler = function () {
     var main = document.querySelector('main');
     var notice = document.querySelector('.notice');
@@ -40,7 +38,6 @@
     main.insertBefore(errorMessage, notice);
   };
 
-  // Отрисовка карточки по клику
   var pin;
   var loadCard = function (evt) {
     evt.preventDefault();
@@ -61,7 +58,6 @@
       window.render.renderCards(pins[index]);
     }
 
-    // Закрытие карточки
     var card = document.querySelector('.map__card');
     if (card) {
       var closeButton = card.querySelector('.popup__close');
@@ -82,8 +78,6 @@
       closeButton.addEventListener('click', closeCard);
     }
 
-
-    // Смена класса при клике
     target.classList.add('map__pin--active');
     if (pin) {
       pin.classList.remove('map__pin--active');
@@ -91,24 +85,20 @@
     pin = target;
   };
 
-  // Открытие карточки по Enter
   var openCard = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       loadCard();
     }
   };
 
-  // Активация карты и загрузка пинов
   var pageActivation = function () {
     window.form.unblockForm();
     window.form.roomSelectChange();
-    var mapPins = map.querySelector('.map__pins');
     mapPins.addEventListener('click', loadCard);
     mapPins.addEventListener('keydown', openCard);
     window.backend.load(successHandler, errorHandler);
   };
 
-  // взаимодействия с главным пином
   mapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     pageActivation();

@@ -2,7 +2,7 @@
 
 (function () {
 
-  var DEBOUNCE_INTERVAL = 500; // ms
+  var DEBOUNCE_INTERVAL = 500;
 
   var debounce = function (cb) {
     var lastTimeout = null;
@@ -18,7 +18,6 @@
     };
   };
 
-  // Фильтрация
   var map = document.querySelector('.map');
   var mapFilter = map.querySelector('.map__filters-container');
   var mapFilterForm = mapFilter.querySelector('.map__filters');
@@ -82,7 +81,6 @@
     window.render.renderPins(filteredPins);
   };
 
-  // обработчик изменения фильтра
   selectHousingType.addEventListener('change', debounce(updatePins));
   selectHousingPrice.addEventListener('change', debounce(updatePins));
   selectHousingRooms.addEventListener('change', debounce(updatePins));

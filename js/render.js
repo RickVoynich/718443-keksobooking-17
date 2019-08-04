@@ -9,17 +9,17 @@
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var mapFilter = map.querySelector('.map__filters-container');
 
-  // рендер пинов
   var renderPin = function (pin) {
-    var pinElement = pinPointTemplate.cloneNode(true);
-    pinElement.id = 'pin-' + pin.id;
-    pinElement.querySelector('img').src = pin.author.avatar;
-    pinElement.querySelector('img').alt = pin.offer.type;
-    pinElement.style = 'left: ' + pin.location.x + 'px;' + 'top: ' + pin.location.y + 'px';
-    return pinElement;
+    if (typeof pin.offer !== 'undefined') {
+      var pinElement = pinPointTemplate.cloneNode(true);
+      pinElement.id = 'pin-' + pin.id;
+      pinElement.querySelector('img').src = pin.author.avatar;
+      pinElement.querySelector('img').alt = pin.offer.type;
+      pinElement.style = 'left: ' + pin.location.x + 'px;' + 'top: ' + pin.location.y + 'px';
+      return pinElement;
+    }
   };
 
-  // отрисовка пинов
   var renderPins = function (array) {
     var pinsNumber = array.length > PIN_QUANTITY ? PIN_QUANTITY : array.length;
     for (var i = 0; i < pinsNumber; i++) {
@@ -27,7 +27,6 @@
     }
   };
 
-  // удаление пинов
   var removePins = function () {
     var allPins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
     allPins.forEach(function (currentPin) {
@@ -35,7 +34,6 @@
     });
   };
 
-  // рендер карточки
   var renderCard = function (card) {
     var cardElement = similarCardTemplate.cloneNode(true);
 
@@ -82,12 +80,10 @@
     return cardElement;
   };
 
-  // отрисовка карточки
   var renderCards = function (array) {
     mapFilter.after(renderCard(array));
   };
 
-  // удаление карточки
   var removeCard = function () {
     var card = map.querySelector('.map__card');
     if (card) {

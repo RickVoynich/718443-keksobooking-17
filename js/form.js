@@ -1,15 +1,15 @@
 'use strict';
 
 (function () {
+
   var map = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
   var mapFilterForm = map.querySelectorAll('.map__filter');
-  var mapFiltersFields = mapFilterForm.children;
   var mapFeatures = map.querySelectorAll('.map__features');
   var mapPin = document.querySelector('.map__pin--main');
-  var defaultCoordsX = 570;
-  var defaultCoordsY = 375;
+  var DEFAULT_COORDS_X = 570;
+  var DEFAULT_COORDS_Y = 375;
 
   var blockForm = function () {
     adForm.classList.add('ad-form--disabled');
@@ -36,8 +36,8 @@
 
   var setPinDefaultCoords = function () {
     return {
-      x: defaultCoordsX + Math.round(window.util.PIN_SIZE / 2),
-      y: defaultCoordsY + Math.round(window.util.PIN_SIZE / 2)
+      x: DEFAULT_COORDS_X + Math.round(window.util.PIN_SIZE / 2),
+      y: DEFAULT_COORDS_Y + Math.round(window.util.PIN_SIZE / 2)
     };
   };
 
@@ -80,113 +80,110 @@
   var capacitySelect = adForm.querySelector('#capacity');
 
   var roomSelectChange = function () {
-   for (var k = 0; k < capacitySelect.children.length; k++) {
-    capacitySelect.children[k].disabled = true;
-  }
-  switch (true) {
-    case roomSelect.querySelector('[value="1"]').selected:
-      capacitySelect.querySelector('[value="1"]').disabled = false;
-      capacitySelect.querySelector('[value="1"]').selected = true;
-      break;
-    case roomSelect.querySelector('[value="2"]').selected:
-      capacitySelect.querySelector('[value="1"]').disabled = false;
-      capacitySelect.querySelector('[value="2"]').disabled = false;
-      capacitySelect.querySelector('[value="2"]').selected = true;
-      break;
-    case roomSelect.querySelector('[value="3"]').selected:
-      capacitySelect.querySelector('[value="1"]').disabled = false;
-      capacitySelect.querySelector('[value="2"]').disabled = false;
-      capacitySelect.querySelector('[value="3"]').disabled = false;
-      capacitySelect.querySelector('[value="2"]').selected = true;
-      break;
-    case roomSelect.querySelector('[value="100"]').selected:
-      capacitySelect.querySelector('[value="0"]').disabled = false;
-      capacitySelect.querySelector('[value="0"]').selected = true;
-      break;
-  }
-};
+    for (var k = 0; k < capacitySelect.children.length; k++) {
+      capacitySelect.children[k].disabled = true;
+    }
+    switch (true) {
+      case roomSelect.querySelector('[value="1"]').selected:
+        capacitySelect.querySelector('[value="1"]').disabled = false;
+        capacitySelect.querySelector('[value="1"]').selected = true;
+        break;
+      case roomSelect.querySelector('[value="2"]').selected:
+        capacitySelect.querySelector('[value="1"]').disabled = false;
+        capacitySelect.querySelector('[value="2"]').disabled = false;
+        break;
+      case roomSelect.querySelector('[value="3"]').selected:
+        capacitySelect.querySelector('[value="1"]').disabled = false;
+        capacitySelect.querySelector('[value="2"]').disabled = false;
+        capacitySelect.querySelector('[value="3"]').disabled = false;
+        break;
+      case roomSelect.querySelector('[value="100"]').selected:
+        capacitySelect.querySelector('[value="0"]').disabled = false;
+        capacitySelect.querySelector('[value="0"]').selected = true;
+        break;
+    }
+  };
 
-roomSelect.addEventListener('change', roomSelectChange);
-capacitySelect.addEventListener('change', roomSelectChange);
+  roomSelect.addEventListener('change', roomSelectChange);
+  capacitySelect.addEventListener('change', roomSelectChange);
 
-var resetAdForm = function () {
-  adForm.reset();
-  blockForm();
+  var resetAdForm = function () {
+    adForm.reset();
+    blockForm();
 
-  mapPin.style.top = defaultCoordsY + 'px';
-  mapPin.style.left = defaultCoordsX + 'px';
-  setAddress(setPinDefaultCoords());
+    mapPin.style.top = DEFAULT_COORDS_Y + 'px';
+    mapPin.style.left = DEFAULT_COORDS_X + 'px';
+    setAddress(setPinDefaultCoords());
 
-  window.render.removePins();
-  window.render.removeCard();
-};
+    window.render.removePins();
+    window.render.removeCard();
+  };
 
-var resetButton = adForm.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', resetAdForm);
+  var resetButton = adForm.querySelector('.ad-form__reset');
+  resetButton.addEventListener('click', resetAdForm);
 
-var onFormSubmit = function (evt) {
-  evt.preventDefault();
-  window.backend.save(new FormData(adForm), onLoad, onError);
-};
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(adForm), onLoad, onError);
+  };
 
-adForm.addEventListener('submit', onFormSubmit);
+  adForm.addEventListener('submit', onFormSubmit);
 
-var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
-var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
+  var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-var onLoad = function () {
-  var successNode = similarSuccessTemplate.cloneNode(true);
-  document.querySelector('main').appendChild(successNode);
-  document.addEventListener('keydown', onSuccessEscPress);
-  document.addEventListener('click', closeSuccess);
+  var onLoad = function () {
+    var successNode = similarSuccessTemplate.cloneNode(true);
+    document.querySelector('main').appendChild(successNode);
+    document.addEventListener('keydown', onSuccessEscPress);
+    document.addEventListener('click', closeSuccess);
 
-  resetAdForm();
-};
+    resetAdForm();
+  };
 
-var closeSuccess = function () {
-  var success = document.querySelector('.success');
-  if (success) {
-    success.remove();
-    document.removeEventListener('keydown', onSuccessEscPress);
-  }
-};
+  var closeSuccess = function () {
+    var success = document.querySelector('.success');
+    if (success) {
+      success.remove();
+      document.removeEventListener('keydown', onSuccessEscPress);
+    }
+  };
 
-var onSuccessEscPress = function (e) {
-  if (e.keyCode === window.util.ESC_KEYCODE) {
-    closeSuccess();
-  }
-};
+  var onSuccessEscPress = function (e) {
+    if (e.keyCode === window.util.ESC_KEYCODE) {
+      closeSuccess();
+    }
+  };
 
-var onError = function () {
-  var errorNode = similarErrorTemplate.cloneNode(true);
-  document.querySelector('main').appendChild(errorNode);
+  var onError = function () {
+    var errorNode = similarErrorTemplate.cloneNode(true);
+    document.querySelector('main').appendChild(errorNode);
 
-  var errorButton = document.querySelector('.error__button');
-  document.addEventListener('keydown', onErrorEscPress);
-  document.addEventListener('click', closeError);
-  errorButton.addEventListener('click', closeError);
-};
+    var errorButton = document.querySelector('.error__button');
+    document.addEventListener('keydown', onErrorEscPress);
+    document.addEventListener('click', closeError);
+    errorButton.addEventListener('click', closeError);
+  };
 
-var closeError = function () {
-  var error = document.querySelector('.error');
-  if (error) {
-    error.remove();
-    document.removeEventListener('keydown', onErrorEscPress);
-  }
-};
+  var closeError = function () {
+    var error = document.querySelector('.error');
+    if (error) {
+      error.remove();
+      document.removeEventListener('keydown', onErrorEscPress);
+    }
+  };
 
-var onErrorEscPress = function (evt) {
-  if (evt.keyCode === window.util.ESC_KEYCODE) {
-    closeError();
-  }
-};
+  var onErrorEscPress = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      closeError();
+    }
+  };
 
-window.form = {
-  adForm: adForm,
-  mapFiltersFields: mapFiltersFields,
-  setAddress: setAddress,
-  unblockForm: unblockForm,
-  roomSelectChange: roomSelectChange
-};
+  window.form = {
+    adForm: adForm,
+    setAddress: setAddress,
+    unblockForm: unblockForm,
+    roomSelectChange: roomSelectChange
+  };
 
-}) ();
+})();
