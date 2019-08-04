@@ -15,7 +15,6 @@
   var pins = [];
   var startLoadPins = function () {
     window.render.renderPins(pins);
-    window.render.renderCards(pins);
   };
 
   // получение данных с сервера
@@ -24,8 +23,8 @@
     for (var i = 0; i < pins.length; i++) {
       pins[i].id = i;
     }
-    startLoadPins();
     window.pins = pins;
+    startLoadPins();
   });
 
   // Ошибка соединения с сервером
@@ -102,6 +101,7 @@
   // Активация карты и загрузка пинов
   var pageActivation = function () {
     window.form.unblockForm();
+    window.form.roomSelectChange();
     var mapPins = map.querySelector('.map__pins');
     mapPins.addEventListener('click', loadCard);
     mapPins.addEventListener('keydown', openCard);
