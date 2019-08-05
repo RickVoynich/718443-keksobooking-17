@@ -160,10 +160,9 @@
     var errorNode = similarErrorTemplate.cloneNode(true);
     document.querySelector('main').appendChild(errorNode);
 
-    var errorButton = document.querySelector('.error__button');
     document.addEventListener('keydown', onErrorEscPress);
     document.addEventListener('click', closeError);
-    errorButton.addEventListener('click', closeError);
+
   };
 
   var closeError = function () {

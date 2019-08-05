@@ -4,6 +4,7 @@
 
   var mapPin = document.querySelector('.map__pin--main');
   var mapPins = document.querySelector('.map__pins');
+  var map = document.querySelector('.map');
 
   var setPinMainCoords = function (elem) {
     return {
@@ -12,39 +13,33 @@
     };
   };
 
-  var pins = [];
-  var startLoadPins = function () {
-    window.render.renderPins(pins);
-  };
+  window.pins = [];
 
   var successHandler = (function (data) {
-    pins = data;
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].id = i;
+    window.pins = data;
+    for (var i = 0; i < window.pins.length; i++) {
+      window.pins[i].id = i;
     }
-    window.pins = pins;
-    startLoadPins();
+    window.render.renderPins(window.pins);
   });
 
-  var pin;
+  var selectedPin;
   var loadCard = function (evt) {
     evt.preventDefault();
-    var target = evt.target;
+    var pin = evt.target.closest('.map__pin:not(.map__pin--main)');
 
-    if (target.nodeName === 'IMG') {
-      target = target.parentNode;
+    if (!pin) {
+      return;
     }
 
-    var mainPin = target.classList.contains('map__pin--main');
-
-    var id = target.id.slice(4);
-    var index = pins.findIndex(function (it) {
+    var id = pin.id.slice(4);
+    var index = window.pins.findIndex(function (it) {
       return it.id === parseInt(id, 10);
     });
-    if (target.nodeName === 'BUTTON' && !mainPin) {
-      window.render.removeCard();
-      window.render.renderCards(pins[index]);
-    }
+
+    window.render.removeCard();
+    window.render.renderCards(window.pins[index]);
+
 
     var card = document.querySelector('.map__card');
     if (card) {
@@ -53,7 +48,7 @@
       var closeCard = function () {
         card.classList.add('hidden');
         document.removeEventListener('keydown', onCardEscPress);
-        pin.classList.remove('map__pin--active');
+        selectedPin.classList.remove('map__pin--active');
       };
 
       var onCardEscPress = function (escPressEvt) {
@@ -66,11 +61,11 @@
       closeButton.addEventListener('click', closeCard);
     }
 
-    target.classList.add('map__pin--active');
-    if (pin) {
-      pin.classList.remove('map__pin--active');
+    if (selectedPin) {
+      selectedPin.classList.remove('map__pin--active');
     }
-    pin = target;
+    pin.classList.add('map__pin--active');
+    selectedPin = pin;
   };
 
   var openCard = function (enterPressEvt) {
@@ -88,7 +83,9 @@
 
   mapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    activatePage();
+    if (map.classList.contains('map--faded')) {
+      activatePage();
+    }
 
     var startCoords = {
       x: evt.clientX,
@@ -118,11 +115,11 @@
         mapPin.style.left = (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2)) + 'px';
       }
 
-      if (mapPin.offsetTop > (window.util.MAX_Y - window.util.PIN_SIZE - window.util.PIN_TAIL_SIZE)) {
-        mapPin.style.top = (window.util.MAX_Y - window.util.PIN_SIZE - window.util.PIN_TAIL_SIZE) + 'px';
+      if (mapPin.offsetTop > window.util.MAX_Y) {
+        mapPin.style.top = window.util.MAX_Y + 'px';
       }
-      if (mapPin.offsetTop < (window.util.MIN_Y - window.util.PIN_SIZE - window.util.PIN_TAIL_SIZE)) {
-        mapPin.style.top = (window.util.MIN_Y - window.util.PIN_SIZE - window.util.PIN_TAIL_SIZE) + 'px';
+      if (mapPin.offsetTop < window.util.MIN_Y) {
+        mapPin.style.top = window.util.MIN_Y + 'px';
       }
       window.form.setAddress(setPinMainCoords(mapPin));
     };
