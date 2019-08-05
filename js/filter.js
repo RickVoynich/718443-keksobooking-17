@@ -70,7 +70,7 @@
         && isCheckPrice(pin)
         && isCheckRooms(pin)
         && isCheckGuests(pin)
-        && isCheckFeatures(pin)
+        && isCheckFeatures(pin);
     });
 
     window.render.renderPins(filteredPins);
