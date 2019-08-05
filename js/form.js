@@ -7,6 +7,7 @@
   var map = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
+  var mapFilters = map.querySelector('.map__filters');
   var mapFilterForm = map.querySelectorAll('.map__filter');
   var mapFeatures = map.querySelectorAll('.map__features');
   var mapPin = document.querySelector('.map__pin--main');
@@ -108,6 +109,7 @@
 
   var resetAdForm = function () {
     adForm.reset();
+    mapFilters.reset();
     blockForm();
 
     mapPin.style.top = DEFAULT_COORDS_Y + 'px';
