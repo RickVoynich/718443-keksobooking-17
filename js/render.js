@@ -2,8 +2,8 @@
 
 (function () {
 
-  var map = document.querySelector('.map');
   var PIN_QUANTITY = 5;
+  var map = document.querySelector('.map');
   var pinListElement = document.querySelector('.map__pins');
   var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');

@@ -2,14 +2,15 @@
 
 (function () {
 
+  var DEFAULT_COORDS_X = 570;
+  var DEFAULT_COORDS_Y = 375;
   var map = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
   var mapFilterForm = map.querySelectorAll('.map__filter');
   var mapFeatures = map.querySelectorAll('.map__features');
   var mapPin = document.querySelector('.map__pin--main');
-  var DEFAULT_COORDS_X = 570;
-  var DEFAULT_COORDS_Y = 375;
+
 
   var blockForm = function () {
     adForm.classList.add('ad-form--disabled');
