@@ -5,13 +5,13 @@
   var addDisabled = function (array) {
     array.forEach(function (element) {
       element.disabled = true;
-    })
+    });
   };
 
   var removeDisabled = function (array) {
     array.forEach(function (element) {
       element.disabled = false;
-    })
+    });
   };
 
   window.util = {

@@ -68,8 +68,8 @@
         pin.classList.remove('map__pin--active');
       };
 
-      var onCardEscPress = function (evt) {
-        if (evt.keyCode === window.util.ESC_KEYCODE) {
+      var onCardEscPress = function (escPressEvt) {
+        if (escPressEvt.keyCode === window.util.ESC_KEYCODE) {
           closeCard();
         }
       };
@@ -85,8 +85,8 @@
     pin = target;
   };
 
-  var openCard = function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+  var openCard = function (enterPressEvt) {
+    if (enterPressEvt.keyCode === window.util.ENTER_KEYCODE) {
       loadCard();
     }
   };
