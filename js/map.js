@@ -123,8 +123,8 @@
       mapPin.style.top = (mapPin.offsetTop - shift.y) + 'px';
       mapPin.style.left = (mapPin.offsetLeft - shift.x) + 'px';
 
-      if (mapPin.offsetLeft > (window.util.MAX_X - Math.round(window.util.PIN_SIZE / 2))) {
-        mapPin.style.left = (window.util.MAX_X - Math.round(window.util.PIN_SIZE / 2)) + 'px';
+      if (mapPin.offsetLeft > (window.util.maxX - Math.round(window.util.PIN_SIZE / 2))) {
+        mapPin.style.left = (window.util.maxX - Math.round(window.util.PIN_SIZE / 2)) + 'px';
       }
       if (mapPin.offsetLeft < (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2))) {
         mapPin.style.left = (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2)) + 'px';
