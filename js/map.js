@@ -91,9 +91,8 @@
     }
   };
 
-  var pageActivation = function () {
+  var activatePage = function () {
     window.form.unblockForm();
-    window.form.roomSelectChange();
     mapPins.addEventListener('click', loadCard);
     mapPins.addEventListener('keydown', openCard);
     window.backend.load(successHandler, errorHandler);
@@ -101,7 +100,7 @@
 
   mapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    pageActivation();
+    activatePage();
 
     var startCoords = {
       x: evt.clientX,
