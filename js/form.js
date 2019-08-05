@@ -79,34 +79,30 @@
   var roomSelect = adForm.querySelector('#room_number');
   var capacitySelect = adForm.querySelector('#capacity');
 
-  var roomSelectChange = function () {
+  var validateRoom = function () {
+    capacitySelect.setCustomValidity('');
 
-    for (var i = 0; i < capacitySelect.children.length; i++) {
-      capacitySelect.children[i].disabled = true;
+    if (roomSelect.value === '1') {
+      if (capacitySelect.value === '3' || capacitySelect.value === '2' || capacitySelect.value === '0') {
+        capacitySelect.setCustomValidity('для одной комнаты выберите вариант "для 1 гостя"');
+      }
+    } else if (roomSelect.value === '2') {
+      if (capacitySelect.value === '3' || capacitySelect.value === '0') {
+        capacitySelect.setCustomValidity('для 2х комнат выберите варианты "«для 2 гостей» или «для 1 гостя»');
+      }
+    } else if (roomSelect.value === '3') {
+      if (capacitySelect.value === '0') {
+        capacitySelect.setCustomValidity('для 3х комнат выберите варианты «для 3 гостей», «для 2 гостей» или «для 1 гостя»');
+      }
+    } else if (roomSelect.value === '100') {
+      if (capacitySelect.value === '3' || capacitySelect.value === '2' || capacitySelect.value === '1') {
+        capacitySelect.setCustomValidity('для 100 комнат выберите вариант "не для гостей"');
+      }
     }
-    switch (true) {
-      case roomSelect.querySelector('[value="1"]').selected:
-        capacitySelect.querySelector('[value="1"]').disabled = false;
-        capacitySelect.querySelector('[value="1"]').selected = true;
-        break;
-      case roomSelect.querySelector('[value="2"]').selected:
-        capacitySelect.querySelector('[value="1"]').disabled = false;
-        capacitySelect.querySelector('[value="2"]').disabled = false;
-        break;
-      case roomSelect.querySelector('[value="3"]').selected:
-        capacitySelect.querySelector('[value="1"]').disabled = false;
-        capacitySelect.querySelector('[value="2"]').disabled = false;
-        capacitySelect.querySelector('[value="3"]').disabled = false;
-        break;
-      case roomSelect.querySelector('[value="100"]').selected:
-        capacitySelect.querySelector('[value="0"]').disabled = false;
-        capacitySelect.querySelector('[value="0"]').selected = true;
-        break;
-    }
-  };
+  }
 
-  roomSelect.addEventListener('change', roomSelectChange);
-  capacitySelect.addEventListener('change', roomSelectChange);
+  roomSelect.addEventListener('change', validateRoom);
+  capacitySelect.addEventListener('change', validateRoom);
 
   var resetAdForm = function () {
     adForm.reset();
@@ -183,8 +179,7 @@
   window.form = {
     adForm: adForm,
     setAddress: setAddress,
-    unblockForm: unblockForm,
-    roomSelectChange: roomSelectChange
+    unblockForm: unblockForm
   };
 
 })();
