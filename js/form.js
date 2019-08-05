@@ -46,17 +46,16 @@
   var housingTypes = document.querySelector('#type');
   var housePriceInput = document.querySelector('#price');
 
-  var MIN_PRICES = {
-    bungalo: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000,
+  var offerTypeToMinPrice = {
+    'bungalo': '0',
+    'flat': '1000',
+    'house': '5000',
+    'palace': '10000',
   };
 
   var setMinPriceValue = function (houseType) {
-    var minPrice = MIN_PRICES[houseType];
-    housePriceInput.min = minPrice;
-    housePriceInput.placeholder = minPrice;
+    housePriceInput.min = offerTypeToMinPrice[houseType];
+    housePriceInput.placeholder = offerTypeToMinPrice[houseType];
   };
 
   setMinPriceValue(housingTypes.value);
