@@ -68,8 +68,8 @@
         pin.classList.remove('map__pin--active');
       };
 
-      var onCardEscPress = function (e) {
-        if (e.keyCode === window.util.ESC_KEYCODE) {
+      var onCardEscPress = function (evt) {
+        if (evt.keyCode === window.util.ESC_KEYCODE) {
           closeCard();
         }
       };

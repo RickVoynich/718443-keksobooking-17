@@ -2,16 +2,16 @@
 
 (function () {
 
-  var addDisabled = function (elem) {
-    for (var i = 0; i < elem.length; i++) {
-      elem[i].disabled = true;
-    }
+  var addDisabled = function (array) {
+    array.forEach(function (element) {
+      element.disabled = true;
+    })
   };
 
-  var removeDisabled = function (element) {
-    for (var j = 0; j < element.length; j++) {
-      element[j].disabled = false;
-    }
+  var removeDisabled = function (array) {
+    array.forEach(function (element) {
+      element.disabled = false;
+    })
   };
 
   window.util = {

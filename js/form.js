@@ -80,8 +80,9 @@
   var capacitySelect = adForm.querySelector('#capacity');
 
   var roomSelectChange = function () {
-    for (var k = 0; k < capacitySelect.children.length; k++) {
-      capacitySelect.children[k].disabled = true;
+
+    for (var i = 0; i < capacitySelect.children.length; i++) {
+      capacitySelect.children[i].disabled = true;
     }
     switch (true) {
       case roomSelect.querySelector('[value="1"]').selected:
@@ -149,8 +150,8 @@
     }
   };
 
-  var onSuccessEscPress = function (e) {
-    if (e.keyCode === window.util.ESC_KEYCODE) {
+  var onSuccessEscPress = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       closeSuccess();
     }
   };
