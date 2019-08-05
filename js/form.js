@@ -101,6 +101,8 @@
     }
   };
 
+  validateRoom();
+
   roomSelect.addEventListener('change', validateRoom);
   capacitySelect.addEventListener('change', validateRoom);
 
