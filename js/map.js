@@ -26,18 +26,6 @@
     startLoadPins();
   });
 
-  var errorHandler = function () {
-    var main = document.querySelector('main');
-    var notice = document.querySelector('.notice');
-
-    var errorMessage = document.querySelector('#error')
-      .content
-      .querySelector('.error')
-      .cloneNode(true);
-
-    main.insertBefore(errorMessage, notice);
-  };
-
   var pin;
   var loadCard = function (evt) {
     evt.preventDefault();
@@ -95,7 +83,7 @@
     window.form.unblockForm();
     mapPins.addEventListener('click', loadCard);
     mapPins.addEventListener('keydown', openCard);
-    window.backend.load(successHandler, errorHandler);
+    window.backend.load(successHandler);
   };
 
   mapPin.addEventListener('mousedown', function (evt) {
