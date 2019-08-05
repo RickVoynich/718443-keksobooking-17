@@ -99,7 +99,7 @@
         capacitySelect.setCustomValidity('для 100 комнат выберите вариант "не для гостей"');
       }
     }
-  }
+  };
 
   roomSelect.addEventListener('change', validateRoom);
   capacitySelect.addEventListener('change', validateRoom);
