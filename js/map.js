@@ -2,13 +2,13 @@
 
 (function () {
 
+  var map = document.querySelector('.map');
   var mapPin = document.querySelector('.map__pin--main');
   var mapPins = document.querySelector('.map__pins');
-  var map = document.querySelector('.map');
   var selectedPin;
   window.pins = [];
 
-    var onLoad = (function (data) {
+  var onLoad = (function (data) {
     window.pins = data;
     for (var i = 0; i < window.pins.length; i++) {
       window.pins[i].id = i;
@@ -50,6 +50,7 @@
     window.render.removeCard();
     window.render.createCard(window.pins[index]);
 
+    var card = document.querySelector('.map__card');
     if (card) {
       var closeButton = document.querySelector('.popup__close');
       document.addEventListener('keydown', onCardEscPress);
