@@ -5,17 +5,10 @@
   var mapPin = document.querySelector('.map__pin--main');
   var mapPins = document.querySelector('.map__pins');
   var map = document.querySelector('.map');
-
-  var setPinMainCoords = function (elem) {
-    return {
-      x: parseInt(elem.style.left, 10) + Math.round(window.util.PIN_SIZE / 2),
-      y: parseInt(elem.style.top, 10) + window.util.PIN_SIZE + window.util.PIN_TAIL_SIZE
-    };
-  };
-
+  var selectedPin;
   window.pins = [];
 
-  var onLoad = (function (data) {
+    var onLoad = (function (data) {
     window.pins = data;
     for (var i = 0; i < window.pins.length; i++) {
       window.pins[i].id = i;
@@ -23,8 +16,25 @@
     window.render.createPins(window.pins);
   });
 
-  var selectedPin;
-  var onMapPinsClick = function (evt) {
+  var closeCard = function () {
+    var card = document.querySelector('.map__card');
+    card.classList.add('hidden');
+    document.removeEventListener('keydown', onCardEscPress);
+    selectedPin.classList.remove('map__pin--active');
+  };
+
+  var onCloseButtonClick = function (evt) {
+    evt.preventDefault();
+    closeCard();
+  };
+
+  var onCardEscPress = function (escPressEvt) {
+    if (escPressEvt.keyCode === window.util.ESC_KEYCODE) {
+      closeCard();
+    }
+  };
+
+  var openCard = function (evt) {
     evt.preventDefault();
     var pin = evt.target.closest('.map__pin:not(.map__pin--main)');
 
@@ -40,24 +50,11 @@
     window.render.removeCard();
     window.render.createCard(window.pins[index]);
 
-    var card = document.querySelector('.map__card');
     if (card) {
-      var closeButton = card.querySelector('.popup__close');
-
-      var closeCard = function () {
-        card.classList.add('hidden');
-        document.removeEventListener('keydown', onCardEscPress);
-        selectedPin.classList.remove('map__pin--active');
-      };
+      var closeButton = document.querySelector('.popup__close');
       document.addEventListener('keydown', onCardEscPress);
-      closeButton.addEventListener('click', closeCard);
+      closeButton.addEventListener('click', onCloseButtonClick);
     }
-
-    var onCardEscPress = function (escPressEvt) {
-      if (escPressEvt.keyCode === window.util.ESC_KEYCODE) {
-        closeCard();
-      }
-    };
 
     if (selectedPin) {
       selectedPin.classList.remove('map__pin--active');
@@ -66,35 +63,33 @@
     selectedPin = pin;
   };
 
+  var onMapPinsClick = function (evt) {
+    evt.preventDefault();
+    openCard(evt);
+  };
+
   var onMapPinsEnterPress = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      onMapPinsClick(evt);
+      openCard(evt);
     }
+  };
+
+  var setPinMainCoords = function (elem) {
+    return {
+      x: parseInt(elem.style.left, 10) + Math.round(window.util.PIN_SIZE / 2),
+      y: parseInt(elem.style.top, 10) + window.util.PIN_SIZE + window.util.PIN_TAIL_SIZE
+    };
   };
 
   var activatePage = function () {
+    window.backend.load(onLoad, window.util.onError);
     window.form.unblockForm();
     mapPins.addEventListener('click', onMapPinsClick);
     mapPins.addEventListener('keydown', onMapPinsEnterPress);
-    window.backend.load(onLoad, window.util.onError);
   };
-
-
-  var onPinMapEnterPress = function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      if (map.classList.contains('map--faded')) {
-        activatePage();
-      }
-    }
-  };
-
-  mapPin.addEventListener('keydown', onPinMapEnterPress);
 
   var onMapPinMouseDown = function (evt) {
     evt.preventDefault();
-    if (map.classList.contains('map--faded')) {
-      activatePage();
-    }
 
     var startCoords = {
       x: evt.clientX,
@@ -135,6 +130,9 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
+      if (map.classList.contains('map--faded')) {
+        activatePage();
+      }
       window.form.setAddress(setPinMainCoords(mapPin));
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -144,6 +142,15 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
+  var onPinMapEnterPress = function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      if (map.classList.contains('map--faded')) {
+        activatePage();
+      }
+    }
+  };
+
+  mapPin.addEventListener('keydown', onPinMapEnterPress);
   mapPin.addEventListener('mousedown', onMapPinMouseDown);
 
 })();
