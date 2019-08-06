@@ -41,25 +41,46 @@
     var cardElement = similarCardTemplate.cloneNode(true);
 
     var popupTitle = cardElement.querySelector('.popup__title');
-    obj.offer.title ? popupTitle.textContent = obj.offer.title : popupTitle.textContent = '';
+    popupTitle.textContent = '';
+    if (obj.offer.title) {
+      popupTitle.textContent = obj.offer.title;
+    }
 
     var popupAddress = cardElement.querySelector('.popup__text--address');
-    obj.offer.address ? popupAddress.textContent = obj.offer.address : popupAddress.textContent = '';
+    popupAddress.textContent = '';
+    if (obj.offer.address) {
+      popupAddress.textContent = obj.offer.address;
+    }
 
     var popupPrice = cardElement.querySelector('.popup__text--price');
-    obj.offer.price ? popupPrice.textContent = obj.offer.price + '₽/ночь' : popupPrice.textContent = '';
+    popupPrice.textContent = '';
+    if (obj.offer.price) {
+      popupPrice.textContent = obj.offer.price + '₽/ночь';
+    }
 
     var popupTime = cardElement.querySelector('.popup__text--time');
-    obj.offer.checkin && obj.offer.checkout ? popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout : popupTime.textContent = '';
+    popupTime.textContent = '';
+    if (obj.offer.checkin && obj.offer.checkout) {
+      popupTime.textContent = 'Заезд после ' + obj.offer.checkin + ', выезд до ' + obj.offer.checkout;
+    }
 
     var popupDescription = cardElement.querySelector('.popup__description');
-    obj.offer.description ? popupDescription.textContent = obj.offer.description : popupDescription.textContent = '';
+    popupDescription.textContent = '';
+    if (obj.offer.description) {
+      popupDescription.textContent = obj.offer.description;
+    }
 
     var popupAvatar = cardElement.querySelector('.popup__avatar');
-    obj.author.avatar ? popupAvatar.src = obj.author.avatar : popupAvatar.src = '';
+    popupAvatar.src = '';
+    if (obj.author.avatar) {
+      popupAvatar.src = obj.author.avatar;
+    }
 
     var capacityHouse = cardElement.querySelector('.popup__text--capacity');
-    obj.offer.rooms > 0 && obj.offer.guests > 0 ? capacityHouse.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей' : capacityHouse.textContent = '';
+    capacityHouse.textContent = '';
+    if (obj.offer.rooms > 0 && obj.offer.guests > 0) {
+      capacityHouse.textContent = obj.offer.rooms + ' комнаты для ' + obj.offer.guests + ' гостей';
+    }
 
     var popupHouseType = cardElement.querySelector('.popup__type');
     switch (obj.offer.type) {
