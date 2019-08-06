@@ -14,9 +14,35 @@
     });
   };
 
+  var onError = function () {
+    var errorNode = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+    document.querySelector('main').appendChild(errorNode);
+
+    var errorButton = document.querySelector('.error__button');
+    errorButton.addEventListener('click', closeError);
+    document.addEventListener('keydown', onErrorEscPress);
+    document.addEventListener('click', closeError);
+  };
+
+  var closeError = function () {
+    var error = document.querySelector('.error');
+    if (error) {
+      error.remove();
+      document.removeEventListener('keydown', onErrorEscPress);
+      document.removeEventListener('click', closeError);
+    }
+  };
+
+  var onErrorEscPress = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      closeError();
+    }
+  };
+
   window.util = {
     addDisabled: addDisabled,
     removeDisabled: removeDisabled,
+    onError: onError,
     MAX_Y: 630,
     MIN_Y: 130,
     MIN_X: 0,

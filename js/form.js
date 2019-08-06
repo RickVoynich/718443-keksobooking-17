@@ -125,14 +125,13 @@
 
   var onFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(adForm), onLoad, onError);
+    window.backend.save(new FormData(adForm), onLoad,  window.util.onError);
   };
 
   adForm.addEventListener('submit', onFormSubmit);
 
-  var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
-  var similarErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 
+  var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
   var onLoad = function () {
     var successNode = similarSuccessTemplate.cloneNode(true);
     document.querySelector('main').appendChild(successNode);
@@ -156,28 +155,7 @@
     }
   };
 
-  var onError = function () {
-    var errorNode = similarErrorTemplate.cloneNode(true);
-    document.querySelector('main').appendChild(errorNode);
 
-    document.addEventListener('keydown', onErrorEscPress);
-    document.addEventListener('click', closeError);
-
-  };
-
-  var closeError = function () {
-    var error = document.querySelector('.error');
-    if (error) {
-      error.remove();
-      document.removeEventListener('keydown', onErrorEscPress);
-    }
-  };
-
-  var onErrorEscPress = function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
-      closeError();
-    }
-  };
 
   window.form = {
     adForm: adForm,

@@ -15,7 +15,7 @@
 
   window.pins = [];
 
-  var successHandler = (function (data) {
+  var onLoad = (function (data) {
     window.pins = data;
     for (var i = 0; i < window.pins.length; i++) {
       window.pins[i].id = i;
@@ -24,7 +24,7 @@
   });
 
   var selectedPin;
-  var loadCard = function (evt) {
+  var onMapPinsClick = function (evt) {
     evt.preventDefault();
     var pin = evt.target.closest('.map__pin:not(.map__pin--main)');
 
@@ -40,7 +40,6 @@
     window.render.removeCard();
     window.render.createCard(window.pins[index]);
 
-
     var card = document.querySelector('.map__card');
     if (card) {
       var closeButton = card.querySelector('.popup__close');
@@ -50,16 +49,15 @@
         document.removeEventListener('keydown', onCardEscPress);
         selectedPin.classList.remove('map__pin--active');
       };
-
-      var onCardEscPress = function (escPressEvt) {
-        if (escPressEvt.keyCode === window.util.ESC_KEYCODE) {
-          closeCard();
-        }
-      };
-
       document.addEventListener('keydown', onCardEscPress);
       closeButton.addEventListener('click', closeCard);
     }
+
+    var onCardEscPress = function (escPressEvt) {
+      if (escPressEvt.keyCode === window.util.ESC_KEYCODE) {
+        closeCard();
+      }
+    };
 
     if (selectedPin) {
       selectedPin.classList.remove('map__pin--active');
@@ -68,20 +66,31 @@
     selectedPin = pin;
   };
 
-  var openCard = function (enterPressEvt) {
-    if (enterPressEvt.keyCode === window.util.ENTER_KEYCODE) {
-      loadCard();
+  var onMapPinsEnterPress = function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      onMapPinsClick(evt);
     }
   };
 
   var activatePage = function () {
     window.form.unblockForm();
-    mapPins.addEventListener('click', loadCard);
-    mapPins.addEventListener('keydown', openCard);
-    window.backend.load(successHandler);
+    mapPins.addEventListener('click', onMapPinsClick);
+    mapPins.addEventListener('keydown', onMapPinsEnterPress);
+    window.backend.load(onLoad, window.util.onError);
   };
 
-  mapPin.addEventListener('mousedown', function (evt) {
+
+  var onPinMapEnterPress = function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      if (map.classList.contains('map--faded')) {
+        activatePage();
+      }
+    }
+  };
+
+  mapPin.addEventListener('keydown', onPinMapEnterPress);
+
+  var onMapPinMouseDown = function (evt) {
     evt.preventDefault();
     if (map.classList.contains('map--faded')) {
       activatePage();
@@ -133,6 +142,8 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  });
+  };
+
+  mapPin.addEventListener('mousedown', onMapPinMouseDown);
 
 })();
