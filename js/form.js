@@ -125,11 +125,10 @@
 
   var onFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(adForm), onLoad,  window.util.onError);
+    window.backend.save(new FormData(adForm), onLoad, window.util.onError);
   };
 
   adForm.addEventListener('submit', onFormSubmit);
-
 
   var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
   var onLoad = function () {
@@ -154,8 +153,6 @@
       closeSuccess();
     }
   };
-
-
 
   window.form = {
     adForm: adForm,
