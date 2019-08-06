@@ -20,7 +20,7 @@
     for (var i = 0; i < window.pins.length; i++) {
       window.pins[i].id = i;
     }
-    window.render.renderPins(window.pins);
+    window.render.createPins(window.pins);
   });
 
   var selectedPin;
@@ -38,7 +38,7 @@
     });
 
     window.render.removeCard();
-    window.render.renderCards(window.pins[index]);
+    window.render.createCard(window.pins[index]);
 
 
     var card = document.querySelector('.map__card');

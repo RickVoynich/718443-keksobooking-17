@@ -27,7 +27,7 @@
 
   var isCheckType = function (pin) {
     var typeOfHouse = selectHousingType.value;
-    return typeOfHouse === 'any' ? true : pin.offer.type === typeOfHouse;
+    return typeOfHouse === 'any' || pin.offer.type === typeOfHouse;
   };
 
   var isCheckPrice = function (pin) {
@@ -46,12 +46,12 @@
 
   var isCheckRooms = function (pin) {
     var housingRooms = selectHousingRooms.value;
-    return housingRooms === 'any' ? true : pin.offer.rooms === +housingRooms;
+    return housingRooms === 'any' || pin.offer.rooms === +housingRooms;
   };
 
   var isCheckGuests = function (pin) {
     var housingGuests = selectHousingGuests.value;
-    return housingGuests === 'any' ? true : pin.offer.guests === +housingGuests;
+    return housingGuests === 'any' || pin.offer.guests === +housingGuests;
   };
 
   var isCheckFeatures = function (pin) {
@@ -73,7 +73,7 @@
         && isCheckFeatures(pin);
     });
 
-    window.render.renderPins(filteredPins);
+    window.render.createPins(filteredPins);
   };
 
   mapFilters.addEventListener('change', debounce(updatePins));
