@@ -2,6 +2,9 @@
 
 (function () {
 
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
+
   var addDisabled = function (array) {
     array.forEach(function (element) {
       element.disabled = true;
@@ -49,8 +52,6 @@
     maxX: document.querySelector('.map__pins').clientWidth,
     PIN_SIZE: 65,
     PIN_TAIL_SIZE: 18,
-    ESC_KEYCODE: 27,
-    ENTER_KEYCODE: 13,
     isKeyBoardEvent: function (evt) {
       return evt instanceof KeyboardEvent;
     },
@@ -64,4 +65,3 @@
   };
 
 })();
-s

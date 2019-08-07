@@ -123,7 +123,7 @@
   };
 
   var onSuccessEscPress = function () {
-    if(window.util.isEscPressed){
+    if (window.util.isEscPressed) {
       closeSuccess();
     }
   };

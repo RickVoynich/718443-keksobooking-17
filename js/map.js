@@ -30,7 +30,7 @@
   };
 
   var onCardEscPress = function () {
-    if(window.util.isEscPressed){
+    if (window.util.isEscPressed) {
       closeCard();
     }
   };
@@ -71,7 +71,7 @@
   };
 
   var onMapPinsEnterPress = function (evt) {
-   if(window.util.isEnterPressed){
+    if (window.util.isEnterPressed) {
       openCard(evt);
     }
   };
@@ -144,7 +144,7 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
-  var onPinMapEnterPress = function (evt) {
+  var onPinMapEnterPress = function () {
     if (window.util.isEnterPressed) {
       if (window.util.mapContainerElem.classList.contains('map--faded')) {
         activatePage();
