@@ -50,7 +50,8 @@
     PIN_SIZE: 65,
     PIN_TAIL_SIZE: 18,
     ESC_KEYCODE: 27,
-    ENTER_KEYCODE: 13
+    ENTER_KEYCODE: 13,
+    mapContainerElem: document.querySelector('.map')
   };
 
 })();

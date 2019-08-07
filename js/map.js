@@ -2,9 +2,8 @@
 
 (function () {
 
-  var map = document.querySelector('.map');
-  var mapPin = document.querySelector('.map__pin--main');
-  var mapPins = document.querySelector('.map__pins');
+  var mapPin = window.util.mapContainerElem.querySelector('.map__pin--main');
+  var mapPins = window.util.mapContainerElem.querySelector('.map__pins');
   var selectedPin;
   window.pins = [];
 
@@ -84,7 +83,7 @@
 
   var activatePage = function () {
     window.backend.load(onLoad, window.util.onError);
-    window.form.unblockForm();
+    window.form.enableElems();
     mapPins.addEventListener('click', onMapPinsClick);
     mapPins.addEventListener('keydown', onMapPinsEnterPress);
   };
@@ -131,7 +130,7 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      if (map.classList.contains('map--faded')) {
+      if (window.util.mapContainerElem.classList.contains('map--faded')) {
         activatePage();
       }
       window.form.setAddress(setPinMainCoords(mapPin));
@@ -145,7 +144,7 @@
 
   var onPinMapEnterPress = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
-      if (map.classList.contains('map--faded')) {
+      if (window.util.mapContainerElem.classList.contains('map--faded')) {
         activatePage();
       }
     }

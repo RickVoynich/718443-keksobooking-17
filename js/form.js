@@ -4,29 +4,37 @@
 
   var DEFAULT_COORDS_X = 570;
   var DEFAULT_COORDS_Y = 375;
-  var map = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
   var address = adForm.querySelector('#address');
   var roomSelect = adForm.querySelector('#room_number');
   var capacitySelect = adForm.querySelector('#capacity');
-  var mapFilters = map.querySelector('.map__filters');
-  var mapFilterForm = map.querySelectorAll('.map__filter');
-  var mapFeatures = map.querySelectorAll('.map__features');
+  var mapFilters = window.util.mapContainerElem.querySelector('.map__filters');
+  var mapFilterForm = window.util.mapContainerElem.querySelectorAll('.map__filter');
+  var mapFeatures = window.util.mapContainerElem.querySelectorAll('.map__features');
   var mapPin = document.querySelector('.map__pin--main');
   var similarSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
   var housingTypes = document.querySelector('#type');
   var housePriceInput = document.querySelector('#price');
+  var timeInSelect = document.querySelector('#timein');
+  var timeOutSelect = document.querySelector('#timeout');
+  var resetButton = adForm.querySelector('.ad-form__reset');
 
-  var blockForm = function () {
+  var disableElems = function () {
     adForm.classList.add('ad-form--disabled');
-    map.classList.add('map--faded');
+    window.util.mapContainerElem.classList.add('map--faded');
     window.util.addDisabled(fieldsetAdForm);
     window.util.addDisabled(mapFilterForm);
     window.util.addDisabled(mapFeatures);
   };
 
-  blockForm();
+  var enableElems = function () {
+    adForm.classList.remove('ad-form--disabled');
+    window.util.mapContainerElem.classList.remove('map--faded');
+    window.util.removeDisabled(fieldsetAdForm);
+    window.util.removeDisabled(mapFilterForm);
+    window.util.removeDisabled(mapFeatures);
+  };
 
   var setAddress = function (coordinates) {
     address.value = coordinates.x + ', ' + coordinates.y;
@@ -51,21 +59,6 @@
     housePriceInput.placeholder = offerTypeToMinPrice[houseType];
   };
 
-  housingTypes.addEventListener('change', function () {
-    setMinPriceValue(housingTypes.value);
-  });
-
-  var timeInSelect = document.querySelector('#timein');
-  var timeOutSelect = document.querySelector('#timeout');
-
-  timeInSelect.addEventListener('change', function () {
-    timeOutSelect.value = timeInSelect.value;
-  });
-
-  timeOutSelect.addEventListener('change', function () {
-    timeInSelect.value = timeOutSelect.value;
-  });
-
   var validateRoom = function () {
     capacitySelect.setCustomValidity('');
 
@@ -88,38 +81,29 @@
     }
   };
 
-  roomSelect.addEventListener('change', validateRoom);
-  capacitySelect.addEventListener('change', validateRoom);
-
   var resetAdForm = function () {
     adForm.reset();
     mapFilters.reset();
-    blockForm();
-
+    disableElems();
     mapPin.style.top = DEFAULT_COORDS_Y + 'px';
     mapPin.style.left = DEFAULT_COORDS_X + 'px';
     setAddress(setPinDefaultCoords());
-
+    setMinPriceValue(housingTypes.value);
+    validateRoom();
     window.render.removePins();
     window.render.removeCard();
   };
-
-  var resetButton = adForm.querySelector('.ad-form__reset');
-  resetButton.addEventListener('click', resetAdForm);
 
   var onFormSubmit = function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(adForm), onLoad, window.util.onError);
   };
 
-  adForm.addEventListener('submit', onFormSubmit);
-
   var onLoad = function () {
     var successNode = similarSuccessTemplate.cloneNode(true);
     document.querySelector('main').appendChild(successNode);
     document.addEventListener('keydown', onSuccessEscPress);
     document.addEventListener('click', closeSuccess);
-
     resetAdForm();
   };
 
@@ -137,21 +121,33 @@
     }
   };
 
-  var unblockForm = function () {
-    adForm.classList.remove('ad-form--disabled');
-    map.classList.remove('map--faded');
-    window.util.removeDisabled(fieldsetAdForm);
-    window.util.removeDisabled(mapFilterForm);
-    window.util.removeDisabled(mapFeatures);
-    setAddress(setPinDefaultCoords());
+  housingTypes.addEventListener('change', function () {
     setMinPriceValue(housingTypes.value);
-    validateRoom();
-  };
+  });
+
+  timeInSelect.addEventListener('change', function () {
+    timeOutSelect.value = timeInSelect.value;
+  });
+
+  timeOutSelect.addEventListener('change', function () {
+    timeInSelect.value = timeOutSelect.value;
+  });
+
+  roomSelect.addEventListener('change', validateRoom);
+  capacitySelect.addEventListener('change', validateRoom);
+  resetButton.addEventListener('click', resetAdForm);
+  adForm.addEventListener('submit', onFormSubmit);
+
+
+  disableElems();
+  setAddress(setPinDefaultCoords());
+  setMinPriceValue(housingTypes.value);
+  validateRoom();
 
   window.form = {
     adForm: adForm,
     setAddress: setAddress,
-    unblockForm: unblockForm
+    enableElems: enableElems,
   };
 
 })();

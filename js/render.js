@@ -3,11 +3,10 @@
 (function () {
 
   var PIN_QUANTITY = 5;
-  var map = document.querySelector('.map');
   var pinListElement = document.querySelector('.map__pins');
   var pinPointTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  var mapFiltersContainer = map.querySelector('.map__filters-container');
+  var mapFiltersContainer = window.util.mapContainerElem.querySelector('.map__filters-container');
   var fragment = document.createDocumentFragment();
 
   var renderPin = function (pin) {
@@ -31,7 +30,7 @@
   };
 
   var removePins = function () {
-    var allPins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var allPins = window.util.mapContainerElem.querySelectorAll('.map__pin:not(.map__pin--main)');
     allPins.forEach(function (currentPin) {
       currentPin.parentNode.removeChild(currentPin);
     });
@@ -123,7 +122,7 @@
   };
 
   var removeCard = function () {
-    var card = map.querySelector('.map__card');
+    var card = window.util.mapContainerElem.querySelector('.map__card');
     if (card) {
       card.remove();
     }
