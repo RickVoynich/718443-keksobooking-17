@@ -8,9 +8,10 @@
 
   var onDataLoad = (function (data) {
     window.pins = data;
-    for (var i = 0; i < window.pins.length; i++) {
-      window.pins[i].id = i;
-    }
+    window.pins = data.map(function (pin, i) {
+      pin.id = i;
+      return pin;
+    });
     window.render.createPins(window.pins);
   });
 
