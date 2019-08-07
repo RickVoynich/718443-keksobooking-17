@@ -98,6 +98,7 @@
   };
 
   var getHouseType = function (card) {
+
     switch (card.offer.type) {
       case 'flat':
         return 'Квартира';
@@ -107,7 +108,7 @@
         return 'Дом';
       case 'palace':
         return 'Дворец';
-    };
+    }
   };
 
   var renderFeatures = function (cardElem, card) {

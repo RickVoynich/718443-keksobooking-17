@@ -117,7 +117,7 @@
     }
   };
 
-  var onSaveData = function () {
+  var onDataSave = function () {
     var successNode = successTemplateElem.cloneNode(true);
     window.util.mainElem.appendChild(successNode);
     document.addEventListener('keydown', onSuccessEscPress);
@@ -127,7 +127,7 @@
 
   var onFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(adFormContainerElem), onSaveData, window.util.onError);
+    window.backend.save(new FormData(adFormContainerElem), onDataSave, window.util.onError);
   };
 
   housingTypeElem.addEventListener('change', function () {
