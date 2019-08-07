@@ -95,6 +95,8 @@
     validateRoom();
     window.render.removePins();
     window.render.removeCard();
+    window.photos.clearAvatar();
+    window.photos.clearPreviewImages();
   };
 
   var closeSuccess = function () {
@@ -156,7 +158,7 @@
     setAddress: setAddress,
     enableElems: enableElems,
     mainPinElem: mainPinElem,
-    mapFiltersElem: mapFiltersElem
+    mapFiltersElem: mapFiltersElem,
   };
 
 })();
