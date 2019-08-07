@@ -3,6 +3,7 @@
 (function () {
 
   var errorTemplateElem = document.querySelector('#error').content.querySelector('.error');
+  var errorNode = errorTemplateElem.cloneNode(true);
 
   var addDisabled = function (elements) {
     elements.forEach(function (element) {
@@ -16,29 +17,32 @@
     });
   };
 
-  var onError = function () {
-    var errorNode = errorTemplateElem.cloneNode(true);
-    window.util.mainElem.appendChild(errorNode);
-
-    var errorButtonElem = document.querySelector('.error__button');
-    errorButtonElem.addEventListener('click', closeError);
-    document.addEventListener('keydown', onErrorEscPress);
-    document.addEventListener('click', closeError);
-  };
-
   var closeError = function () {
     var errorElem = document.querySelector('.error');
     if (errorElem) {
       errorElem.remove();
       document.removeEventListener('keydown', onErrorEscPress);
-      document.removeEventListener('click', closeError);
+      errorNode.removeEventListener('click', onErrorClick);
     }
+  };
+
+  var onErrorClick = function (evt) {
+    evt.preventDefault();
+    closeError();
   };
 
   var onErrorEscPress = function (evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
       closeError();
     }
+  };
+
+  var onError = function () {
+    window.util.mainElem.appendChild(errorNode);
+    var errorButtonElem = document.querySelector('.error__button');
+    errorButtonElem.addEventListener('click', closeError);
+    document.addEventListener('keydown', onErrorEscPress);
+    errorNode.addEventListener('click', onErrorClick);
   };
 
   window.util = {

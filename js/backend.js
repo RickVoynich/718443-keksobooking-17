@@ -7,6 +7,7 @@
   var METHOD_GET = 'GET';
   var METHOD_POST = 'POST';
   var STATUS = 200;
+  var TIMEOUT = 10000;
 
   var createXhr = function (method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
@@ -21,6 +22,12 @@
     });
 
     xhr.addEventListener('error', onError);
+
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = TIMEOUT;
 
     xhr.open(method, url);
 
