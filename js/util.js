@@ -33,8 +33,8 @@
     }
   };
 
-  var onErrorEscPress = function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
+  var onErrorEscPress = function () {
+    if (window.util.isEscPressed) {
       closeError();
     }
   };
@@ -51,7 +51,17 @@
     PIN_TAIL_SIZE: 18,
     ESC_KEYCODE: 27,
     ENTER_KEYCODE: 13,
+    isKeyBoardEvent: function (evt) {
+      return evt instanceof KeyboardEvent;
+    },
+    isEnterPressed: function (evt) {
+      return evt.keyCode === ENTER_KEYCODE;
+    },
+    isEscPressed: function (evt) {
+      return evt.keyCode === ESC_KEYCODE;
+    },
     mapContainerElem: document.querySelector('.map')
   };
 
 })();
+s
