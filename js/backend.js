@@ -8,7 +8,7 @@
   var POST_METHOD = 'POST';
   var STATUS = 200;
 
-  var createXhr = function (method, url,onSuccess, onError, data ) {
+  var createXhr = function (method, url, onSuccess, onError, data) {
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -26,7 +26,7 @@
     xhr.open(method, url);
 
     if (method === GET_METHOD) {
-      xhr.send()
+      xhr.send();
     } else {
       xhr.send(data);
     }
@@ -37,7 +37,7 @@
   };
 
   var save = function (data, onSuccess, onError) {
-    createXhr(POST_METHOD, POST_URL,  onSuccess, onError, data);
+    createXhr(POST_METHOD, POST_URL, onSuccess, onError, data);
   };
 
   window.backend = {
