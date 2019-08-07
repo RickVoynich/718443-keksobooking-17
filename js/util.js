@@ -2,9 +2,6 @@
 
 (function () {
 
-  var ESC_KEYCODE = 27;
-  var ENTER_KEYCODE = 13;
-
   var addDisabled = function (array) {
     array.forEach(function (element) {
       element.disabled = true;
@@ -52,15 +49,8 @@
     maxX: document.querySelector('.map__pins').clientWidth,
     PIN_SIZE: 65,
     PIN_TAIL_SIZE: 18,
-    isKeyBoardEvent: function (evt) {
-      return evt instanceof KeyboardEvent;
-    },
-    isEnterPressed: function (evt) {
-      return evt.keyCode === ENTER_KEYCODE;
-    },
-    isEscPressed: function (evt) {
-      return evt.keyCode === ESC_KEYCODE;
-    },
+    ESC_KEYCODE: 27,
+    ENTER_KEYCODE: 13,
     mapContainerElem: document.querySelector('.map')
   };
 

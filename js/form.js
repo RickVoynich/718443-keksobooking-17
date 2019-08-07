@@ -122,8 +122,8 @@
     }
   };
 
-  var onSuccessEscPress = function () {
-    if (window.util.isEscPressed) {
+  var onSuccessEscPress = function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       closeSuccess();
     }
   };

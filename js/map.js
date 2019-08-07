@@ -29,8 +29,8 @@
     closeCard();
   };
 
-  var onCardEscPress = function () {
-    if (window.util.isEscPressed) {
+  var onCardEscPress = function (escPressEvt) {
+    if (escPressEvt.keyCode === window.util.ESC_KEYCODE) {
       closeCard();
     }
   };
@@ -71,7 +71,7 @@
   };
 
   var onMapPinsEnterPress = function (evt) {
-    if (window.util.isEnterPressed) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
       openCard(evt);
     }
   };
@@ -144,8 +144,8 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
-  var onPinMapEnterPress = function () {
-    if (window.util.isEnterPressed) {
+  var onPinMapEnterPress = function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
       if (window.util.mapContainerElem.classList.contains('map--faded')) {
         activatePage();
       }
