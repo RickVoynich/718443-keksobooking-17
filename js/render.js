@@ -19,8 +19,8 @@
     return pinElement;
   };
 
-  var createPins = function (array) {
-    var pinsArray = array.slice(0, PIN_QUANTITY);
+  var createPins = function (pins) {
+    var pinsArray = pins.slice(0, PIN_QUANTITY);
     pinsArray.forEach(function (element) {
       if (element.offer) {
         fragment.appendChild(renderPin(element));
@@ -36,7 +36,7 @@
     });
   };
 
-  var isCheckTitle = function (cardElem, card) {
+  var renderTitle = function (cardElem, card) {
     var cardTitleElem = cardElem.querySelector('.popup__title');
     cardTitleElem.textContent = '';
     if (card.offer.title) {
@@ -44,7 +44,7 @@
     }
   };
 
-  var isCheckAddress = function (cardElem, card) {
+  var renderAddress = function (cardElem, card) {
     var cardAddressElem = cardElem.querySelector('.popup__text--address');
     cardAddressElem.textContent = '';
     if (card.offer.address) {
@@ -52,7 +52,7 @@
     }
   };
 
-  var isCheckPrice = function (cardElem, card) {
+  var renderPrice = function (cardElem, card) {
     var cardPriceElem = cardElem.querySelector('.popup__text--price');
     cardPriceElem.textContent = '';
     if (card.offer.price) {
@@ -60,7 +60,7 @@
     }
   };
 
-  var isCheckTime = function (cardElem, card) {
+  var renderTime = function (cardElem, card) {
     var cardTimeElem = cardElem.querySelector('.popup__text--time');
     cardTimeElem.textContent = '';
     if (card.offer.checkin && card.offer.checkout) {
@@ -68,7 +68,7 @@
     }
   };
 
-  var isCheckDescription = function (cardElem, card) {
+  var renderDescription = function (cardElem, card) {
     var cardDescriptionElem = cardElem.querySelector('.popup__description');
     cardDescriptionElem.textContent = '';
     if (card.offer.description) {
@@ -76,7 +76,7 @@
     }
   };
 
-  var isCheckAvatar = function (cardElem, card) {
+  var renderAvatar = function (cardElem, card) {
     var cardAvatarElem = cardElem.querySelector('.popup__avatar');
     cardAvatarElem.src = '';
     if (card.author.avatar) {
@@ -84,7 +84,7 @@
     }
   };
 
-  var isCheckCapacity = function (cardElem, card) {
+  var renderCapacity = function (cardElem, card) {
     var houseCapacityElem = cardElem.querySelector('.popup__text--capacity');
     houseCapacityElem.textContent = '';
     if (card.offer.rooms > 0 && card.offer.guests > 0) {
@@ -92,25 +92,25 @@
     }
   };
 
-  var isCheckHouseType = function (cardElem, card) {
+  var renderHouseType = function (cardElem, card) {
     var houseTypeElem = cardElem.querySelector('.popup__type');
+    houseTypeElem.textContent = getHouseType(card)
+  };
+
+  var getHouseType = function (card) {
     switch (card.offer.type) {
       case 'flat':
-        houseTypeElem.textContent = 'Квартира';
-        break;
+        return 'Квартира';
       case 'bungalo':
-        houseTypeElem.textContent = 'Бунгало';
-        break;
+        return 'Бунгало';
       case 'house':
-        houseTypeElem.textContent = 'Дом';
-        break;
+        return 'Дом';
       case 'palace':
-        houseTypeElem.textContent = 'Дворец';
-        break;
+        return 'Дворец';
     }
   };
 
-  var isCheckFeatures = function (cardElem, card) {
+  var renderFeatures = function (cardElem, card) {
     var cardFeaturesElem = cardElem.querySelector('.popup__features');
     cardFeaturesElem.innerHTML = '';
     if (card.offer.features.length) {
@@ -120,7 +120,7 @@
     }
   };
 
-  var isCheckPhotos = function (cardElem, card) {
+  var renderPhotos = function (cardElem, card) {
     var cardPhotosElem = cardElem.querySelector('.popup__photos');
     cardPhotosElem.innerHTML = '';
     if (card.offer.photos.length) {
@@ -133,22 +133,23 @@
   var renderCard = function (cardArr) {
     var cardElement = cardTemplateElem.cloneNode(true);
 
-    isCheckTitle(cardElement, cardArr);
-    isCheckPrice(cardElement, cardArr);
-    isCheckAddress(cardElement, cardArr);
-    isCheckTime(cardElement, cardArr);
-    isCheckDescription(cardElement, cardArr);
-    isCheckAvatar(cardElement, cardArr);
-    isCheckCapacity(cardElement, cardArr);
-    isCheckHouseType(cardElement, cardArr);
-    isCheckFeatures(cardElement, cardArr);
-    isCheckPhotos(cardElement, cardArr);
+    renderTitle(cardElement, cardArr);
+    renderPrice(cardElement, cardArr);
+    renderAddress(cardElement, cardArr);
+    renderTime(cardElement, cardArr);
+    renderDescription(cardElement, cardArr);
+    renderAvatar(cardElement, cardArr);
+    renderCapacity(cardElement, cardArr);
+    renderHouseType(cardElement, cardArr);
+    getHouseType(cardArr);
+    renderFeatures(cardElement, cardArr);
+    renderPhotos(cardElement, cardArr);
 
     return cardElement;
   };
 
-  var createCard = function (array) {
-    fragment.appendChild(renderCard(array));
+  var createCard = function (pin) {
+    fragment.appendChild(renderCard(pin));
     filtersContainerElem.after(fragment);
   };
 
