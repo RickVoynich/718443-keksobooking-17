@@ -81,6 +81,13 @@
     }
   };
 
+  var onRoomSelectChange = function () {
+    validateRoom();
+  };
+  var onCapacitySelectChange = function () {
+    validateRoom();
+  };
+
   var resetAdForm = function () {
     adForm.reset();
     mapFilters.reset();
@@ -133,8 +140,8 @@
     timeInSelect.value = timeOutSelect.value;
   });
 
-  roomSelect.addEventListener('change', validateRoom);
-  capacitySelect.addEventListener('change', validateRoom);
+  roomSelect.addEventListener('change', onRoomSelectChange);
+  capacitySelect.addEventListener('change', onCapacitySelectChange);
   resetButton.addEventListener('click', resetAdForm);
   adForm.addEventListener('submit', onFormSubmit);
 
