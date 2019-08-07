@@ -2,6 +2,8 @@
 
 (function () {
 
+  var errorTemplateElem = document.querySelector('#error').content.querySelector('.error');
+
   var addDisabled = function (array) {
     array.forEach(function (element) {
       element.disabled = true;
@@ -15,43 +17,44 @@
   };
 
   var onError = function () {
-    var errorNode = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
-    document.querySelector('main').appendChild(errorNode);
+    var errorNode = errorTemplateElem.cloneNode(true);
+    window.util.mainElem.appendChild(errorNode);
 
-    var errorButton = document.querySelector('.error__button');
-    errorButton.addEventListener('click', closeError);
+    var errorButtonElem = document.querySelector('.error__button');
+    errorButtonElem.addEventListener('click', closeError);
     document.addEventListener('keydown', onErrorEscPress);
     document.addEventListener('click', closeError);
   };
 
   var closeError = function () {
-    var error = document.querySelector('.error');
-    if (error) {
-      error.remove();
+    var errorElem = document.querySelector('.error');
+    if (errorElem) {
+      errorElem.remove();
       document.removeEventListener('keydown', onErrorEscPress);
       document.removeEventListener('click', closeError);
     }
   };
 
   var onErrorEscPress = function () {
-    if (window.util.isEscPressed) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       closeError();
     }
   };
 
   window.util = {
-    addDisabled: addDisabled,
-    removeDisabled: removeDisabled,
-    onError: onError,
-    MAX_Y: 630,
-    MIN_Y: 130,
-    MIN_X: 0,
-    maxX: document.querySelector('.map__pins').clientWidth,
+    ENTER_KEYCODE: 13,
+    ESC_KEYCODE: 27,
     PIN_SIZE: 65,
     PIN_TAIL_SIZE: 18,
-    ESC_KEYCODE: 27,
-    ENTER_KEYCODE: 13,
-    mapContainerElem: document.querySelector('.map')
+    MIN_Y: 130,
+    MAX_Y: 630,
+    MIN_X: 0,
+    maxX: document.querySelector('.map__pins').clientWidth,
+    mapContainerElem: document.querySelector('.map'),
+    mainElem: document.querySelector('main'),
+    addDisabled: addDisabled,
+    removeDisabled: removeDisabled,
+    onError: onError
   };
 
 })();

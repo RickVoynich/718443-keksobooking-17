@@ -2,8 +2,7 @@
 
 (function () {
 
-  var mapPin = window.util.mapContainerElem.querySelector('.map__pin--main');
-  var mapPins = window.util.mapContainerElem.querySelector('.map__pins');
+  var mapPinsElem = window.util.mapContainerElem.querySelector('.map__pins');
   var selectedPin;
   window.pins = [];
 
@@ -53,9 +52,9 @@
 
     var card = document.querySelector('.map__card');
     if (card) {
-      var closeButton = document.querySelector('.popup__close');
+      var closeButtonElem = document.querySelector('.popup__close');
       document.addEventListener('keydown', onCardEscPress);
-      closeButton.addEventListener('click', onCloseButtonClick);
+      closeButtonElem.addEventListener('click', onCloseButtonClick);
     }
 
     if (selectedPin) {
@@ -86,11 +85,11 @@
   var activatePage = function () {
     window.backend.load(onLoad, window.util.onError);
     window.form.enableElems();
-    mapPins.addEventListener('click', onMapPinsClick);
-    mapPins.addEventListener('keydown', onMapPinsEnterPress);
+    mapPinsElem.addEventListener('click', onMapPinsClick);
+    mapPinsElem.addEventListener('keydown', onMapPinsEnterPress);
   };
 
-  var onMapPinMouseDown = function (evt) {
+  var onMainPinElemMouseDown = function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -111,23 +110,23 @@
         y: moveEvt.clientY
       };
 
-      mapPin.style.top = (mapPin.offsetTop - shift.y) + 'px';
-      mapPin.style.left = (mapPin.offsetLeft - shift.x) + 'px';
+      window.form.mainPinElem.style.top = (window.form.mainPinElem.offsetTop - shift.y) + 'px';
+      window.form.mainPinElem.style.left = (window.form.mainPinElem.offsetLeft - shift.x) + 'px';
 
-      if (mapPin.offsetLeft > (window.util.maxX - Math.round(window.util.PIN_SIZE / 2))) {
-        mapPin.style.left = (window.util.maxX - Math.round(window.util.PIN_SIZE / 2)) + 'px';
+      if (window.form.mainPinElem.offsetLeft > (window.util.maxX - Math.round(window.util.PIN_SIZE / 2))) {
+        window.form.mainPinElem.style.left = (window.util.maxX - Math.round(window.util.PIN_SIZE / 2)) + 'px';
       }
-      if (mapPin.offsetLeft < (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2))) {
-        mapPin.style.left = (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2)) + 'px';
+      if (window.form.mainPinElem.offsetLeft < (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2))) {
+        window.form.mainPinElem.style.left = (window.util.MIN_X - Math.round(window.util.PIN_SIZE / 2)) + 'px';
       }
 
-      if (mapPin.offsetTop > window.util.MAX_Y) {
-        mapPin.style.top = window.util.MAX_Y + 'px';
+      if (window.form.mainPinElem.offsetTop > window.util.MAX_Y) {
+        window.form.mainPinElem.style.top = window.util.MAX_Y + 'px';
       }
-      if (mapPin.offsetTop < window.util.MIN_Y) {
-        mapPin.style.top = window.util.MIN_Y + 'px';
+      if (window.form.mainPinElem.offsetTop < window.util.MIN_Y) {
+        window.form.mainPinElem.style.top = window.util.MIN_Y + 'px';
       }
-      window.form.setAddress(setPinMainCoords(mapPin));
+      window.form.setAddress(setPinMainCoords(window.form.mainPinElem));
     };
 
     var onMouseUp = function (upEvt) {
@@ -135,7 +134,7 @@
       if (window.util.mapContainerElem.classList.contains('map--faded')) {
         activatePage();
       }
-      window.form.setAddress(setPinMainCoords(mapPin));
+      window.form.setAddress(setPinMainCoords(window.form.mainPinElem));
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -144,7 +143,7 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
-  var onPinMapEnterPress = function (evt) {
+  var onMainPinElemEnterPress = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       if (window.util.mapContainerElem.classList.contains('map--faded')) {
         activatePage();
@@ -152,7 +151,7 @@
     }
   };
 
-  mapPin.addEventListener('keydown', onPinMapEnterPress);
-  mapPin.addEventListener('mousedown', onMapPinMouseDown);
+  window.form.mainPinElem.addEventListener('keydown', onMainPinElemEnterPress);
+  window.form.mainPinElem.addEventListener('mousedown', onMainPinElemMouseDown);
 
 })();

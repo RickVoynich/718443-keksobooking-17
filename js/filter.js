@@ -5,11 +5,11 @@
   var DEBOUNCE_INTERVAL = 500;
   var MIN_HOUSING_PRICE = 10000;
   var MAX_HOUSING_PRICE = 50000;
-  var mapFilters = document.querySelector('.map__filters');
-  var selectHousingType = mapFilters.querySelector('#housing-type');
-  var selectHousingPrice = mapFilters.querySelector('#housing-price');
-  var selectHousingRooms = mapFilters.querySelector('#housing-rooms');
-  var selectHousingGuests = mapFilters.querySelector('#housing-guests');
+
+  var selectHousingTypeElem = window.form.mapFiltersElem.querySelector('#housing-type');
+  var selectHousingPriceElem = window.form.mapFiltersElem.querySelector('#housing-price');
+  var selectHousingRoomsElem = window.form.mapFiltersElem.querySelector('#housing-rooms');
+  var selectHousingGuestsElem = window.form.mapFiltersElem.querySelector('#housing-guests');
 
   var debounce = function (cb) {
     var lastTimeout = null;
@@ -26,12 +26,12 @@
   };
 
   var isCheckType = function (pin) {
-    var typeOfHouse = selectHousingType.value;
-    return typeOfHouse === 'any' || pin.offer.type === typeOfHouse;
+    var housingType = selectHousingTypeElem.value;
+    return housingType === 'any' || pin.offer.type === housingType;
   };
 
   var isCheckPrice = function (pin) {
-    var housingPrice = selectHousingPrice.value;
+    var housingPrice = selectHousingPriceElem.value;
     switch (housingPrice) {
       case 'low':
         return pin.offer.price < MIN_HOUSING_PRICE;
@@ -45,17 +45,17 @@
   };
 
   var isCheckRooms = function (pin) {
-    var housingRooms = selectHousingRooms.value;
+    var housingRooms = selectHousingRoomsElem.value;
     return housingRooms === 'any' || pin.offer.rooms === +housingRooms;
   };
 
   var isCheckGuests = function (pin) {
-    var housingGuests = selectHousingGuests.value;
+    var housingGuests = selectHousingGuestsElem.value;
     return housingGuests === 'any' || pin.offer.guests === +housingGuests;
   };
 
   var isCheckFeatures = function (pin) {
-    var checkedFeatures = mapFilters.querySelectorAll('input:checked');
+    var checkedFeatures = window.form.mapFiltersElem.querySelectorAll('input:checked');
     return Array.from(checkedFeatures).every(function (element) {
       return pin.offer.features.includes(element.value);
     });
@@ -76,6 +76,6 @@
     window.render.createPins(filteredPins);
   };
 
-  mapFilters.addEventListener('change', debounce(updatePins));
+  window.form.mapFiltersElem.addEventListener('change', debounce(updatePins));
 
 })();
