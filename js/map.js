@@ -16,10 +16,12 @@
   });
 
   var closeCard = function () {
-    var card = document.querySelector('.map__card');
-    card.classList.add('hidden');
     document.removeEventListener('keydown', onCardEscPress);
     selectedPin.classList.remove('map__pin--active');
+    var card = document.querySelector('.map__card');
+    if (card) {
+      card.classList.add('hidden');
+    }
   };
 
   var onCloseButtonClick = function (evt) {
