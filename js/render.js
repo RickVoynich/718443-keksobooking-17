@@ -101,13 +101,13 @@
         break;
       case 'bungalo':
         houseTypeElem.textContent = 'Бунгало';
-        break
+        break;
       case 'house':
         houseTypeElem.textContent = 'Дом';
-        break
+        break;
       case 'palace':
         houseTypeElem.textContent = 'Дворец';
-        break
+        break;
     }
   };
 
