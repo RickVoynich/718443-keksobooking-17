@@ -94,7 +94,7 @@
 
   var renderHouseType = function (cardElem, card) {
     var houseTypeElem = cardElem.querySelector('.popup__type');
-    houseTypeElem.textContent = getHouseType(card)
+    houseTypeElem.textContent = getHouseType(card);
   };
 
   var getHouseType = function (card) {
@@ -107,7 +107,7 @@
         return 'Дом';
       case 'palace':
         return 'Дворец';
-    }
+    };
   };
 
   var renderFeatures = function (cardElem, card) {

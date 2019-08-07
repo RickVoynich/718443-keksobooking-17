@@ -67,14 +67,11 @@
 
     if (roomElem.value === '1' && ['0', '2', '3'].includes(capacityElem.value)) {
       capacityElem.setCustomValidity('для одной комнаты выберите вариант "для 1 гостя"');
-    }
-    else if (roomElem.value === '2' && ['0', '3'].includes(capacityElem.value)) {
+    } else if (roomElem.value === '2' && ['0', '3'].includes(capacityElem.value)) {
       capacityElem.setCustomValidity('для 2х комнат выберите варианты "«для 2 гостей» или «для 1 гостя»"');
-    }
-    else if (roomElem.value === '3' && ['0'].includes(capacityElem.value)) {
+    } else if (roomElem.value === '3' && ['0'].includes(capacityElem.value)) {
       capacityElem.setCustomValidity('для 3х комнат выберите варианты «для 3 гостей», «для 2 гостей» или «для 1 гостя»"');
-    }
-    else if (roomElem.value === '100' && ['1', '2', '3'].includes(capacityElem.value)) {
+    } else if (roomElem.value === '100' && ['1', '2', '3'].includes(capacityElem.value)) {
       capacityElem.setCustomValidity('для 100 комнат выберите вариант "не для гостей"');
     }
   };
