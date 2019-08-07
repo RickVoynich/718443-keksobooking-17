@@ -83,10 +83,10 @@
   };
 
   var activatePage = function () {
-    window.backend.load(onDataLoad, window.util.onError);
     window.form.enableElems();
     mapPinsElem.addEventListener('click', onMapPinsClick);
     mapPinsElem.addEventListener('keydown', onMapPinsEnterPress);
+    window.backend.load(onDataLoad, window.util.onError);
   };
 
   var onMainPinElemMouseDown = function (evt) {
@@ -99,6 +99,9 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+      if (window.util.mapContainerElem.classList.contains('map--faded')) {
+        activatePage();
+      }
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
