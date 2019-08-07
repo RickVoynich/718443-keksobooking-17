@@ -92,11 +92,6 @@
     }
   };
 
-  var renderHouseType = function (cardElem, card) {
-    var houseTypeElem = cardElem.querySelector('.popup__type');
-    houseTypeElem.textContent = getHouseType(card);
-  };
-
   var getHouseType = function (card) {
 
     switch (card.offer.type) {
@@ -110,6 +105,12 @@
         return 'Дворец';
     }
   };
+
+  var renderHouseType = function (cardElem, card) {
+    var houseTypeElem = cardElem.querySelector('.popup__type');
+    houseTypeElem.textContent = getHouseType(card);
+  };
+
 
   var renderFeatures = function (cardElem, card) {
     var cardFeaturesElem = cardElem.querySelector('.popup__features');
@@ -142,7 +143,6 @@
     renderAvatar(cardElement, cardArr);
     renderCapacity(cardElement, cardArr);
     renderHouseType(cardElement, cardArr);
-    getHouseType(cardArr);
     renderFeatures(cardElement, cardArr);
     renderPhotos(cardElement, cardArr);
 
