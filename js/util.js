@@ -4,14 +4,14 @@
 
   var errorTemplateElem = document.querySelector('#error').content.querySelector('.error');
 
-  var addDisabled = function (array) {
-    array.forEach(function (element) {
+  var addDisabled = function (elements) {
+    elements.forEach(function (element) {
       element.disabled = true;
     });
   };
 
-  var removeDisabled = function (array) {
-    array.forEach(function (element) {
+  var removeDisabled = function (elements) {
+    elements.forEach(function (element) {
       element.disabled = false;
     });
   };

@@ -6,7 +6,7 @@
   var selectedPin;
   window.pins = [];
 
-  var onLoad = (function (data) {
+  var onDataLoad = (function (data) {
     window.pins = data;
     for (var i = 0; i < window.pins.length; i++) {
       window.pins[i].id = i;
@@ -83,7 +83,7 @@
   };
 
   var activatePage = function () {
-    window.backend.load(onLoad, window.util.onError);
+    window.backend.load(onDataLoad, window.util.onError);
     window.form.enableElems();
     mapPinsElem.addEventListener('click', onMapPinsClick);
     mapPinsElem.addEventListener('keydown', onMapPinsEnterPress);

@@ -65,22 +65,14 @@
   var validateRoom = function () {
     capacityElem.setCustomValidity('');
 
-    if (roomElem.value === '1') {
-      if (capacityElem.value === '3' || capacityElem.value === '2' || capacityElem.value === '0') {
-        capacityElem.setCustomValidity('для одной комнаты выберите вариант "для 1 гостя"');
-      }
-    } else if (roomElem.value === '2') {
-      if (capacityElem.value === '3' || capacityElem.value === '0') {
-        capacityElem.setCustomValidity('для 2х комнат выберите варианты "«для 2 гостей» или «для 1 гостя»');
-      }
-    } else if (roomElem.value === '3') {
-      if (capacityElem.value === '0') {
-        capacityElem.setCustomValidity('для 3х комнат выберите варианты «для 3 гостей», «для 2 гостей» или «для 1 гостя»');
-      }
-    } else if (roomElem.value === '100') {
-      if (capacityElem.value === '3' || capacityElem.value === '2' || capacityElem.value === '1') {
-        capacityElem.setCustomValidity('для 100 комнат выберите вариант "не для гостей"');
-      }
+    if (roomElem.value === '1' && ['0', '2', '3'].includes(capacityElem.value)) {
+      capacityElem.setCustomValidity('для одной комнаты выберите вариант "для 1 гостя"');
+    } else if (roomElem.value === '2' && ['0', '3'].includes(capacityElem.value)) {
+      capacityElem.setCustomValidity('для 2х комнат выберите варианты "«для 2 гостей» или «для 1 гостя»"');
+    } else if (roomElem.value === '3' && ['0'].includes(capacityElem.value)) {
+      capacityElem.setCustomValidity('для 3х комнат выберите варианты «для 3 гостей», «для 2 гостей» или «для 1 гостя»"');
+    } else if (roomElem.value === '100' && ['1', '2', '3'].includes(capacityElem.value)) {
+      capacityElem.setCustomValidity('для 100 комнат выберите вариант "не для гостей"');
     }
   };
 
@@ -109,8 +101,14 @@
     var successElem = document.querySelector('.success');
     if (successElem) {
       successElem.remove();
+      document.removeEventListener('click', onSuccessClick);
       document.removeEventListener('keydown', onSuccessEscPress);
     }
+  };
+
+  var onSuccessClick = function (evt) {
+    evt.preventDefault();
+    closeSuccess();
   };
 
   var onSuccessEscPress = function (evt) {
@@ -119,17 +117,17 @@
     }
   };
 
-  var onLoad = function () {
+  var onDataSave = function () {
     var successNode = successTemplateElem.cloneNode(true);
     window.util.mainElem.appendChild(successNode);
     document.addEventListener('keydown', onSuccessEscPress);
-    document.addEventListener('click', closeSuccess);
+    document.addEventListener('click', onSuccessClick);
     resetPage();
   };
 
   var onFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(adFormContainerElem), onLoad, window.util.onError);
+    window.backend.save(new FormData(adFormContainerElem), onDataSave, window.util.onError);
   };
 
   housingTypeElem.addEventListener('change', function () {
