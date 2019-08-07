@@ -96,13 +96,17 @@
     var houseTypeElem = cardElem.querySelector('.popup__type');
     switch (card.offer.type) {
       case 'flat':
-        return houseTypeElem.textContent = 'Квартира';
+        houseTypeElem.textContent = 'Квартира';
+        break;
       case 'bungalo':
-        return houseTypeElem.textContent = 'Бунгало';
+        houseTypeElem.textContent = 'Бунгало';
+        break;
       case 'house':
-        return houseTypeElem.textContent = 'Дом';
+        houseTypeElem.textContent = 'Дом';
+        break;
       case 'palace':
-        return houseTypeElem.textContent = 'Дворец';
+        houseTypeElem.textContent = 'Дворец';
+        break;
     }
   };
 
