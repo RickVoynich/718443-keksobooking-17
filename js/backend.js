@@ -2,51 +2,41 @@
 
 (function () {
 
-  var GET_URL = 'https://js.dump.academy/keksobooking/data';
-  var POST_URL = 'https://js.dump.academy/keksobooking';
+  var URL_GET = 'https://js.dump.academy/keksobooking/data';
+  var URL_POST = 'https://js.dump.academy/keksobooking';
+  var METHOD_GET = 'GET';
+  var METHOD_POST = 'POST';
+  var STATUS = 200;
 
-  var load = function (onSuccess, onError) {
+  var createXhr = function (method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS) {
         onSuccess(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
-    xhr.addEventListener('error', function () {
-      var main = document.querySelector('main');
-      var notice = document.querySelector('.notice');
+    xhr.addEventListener('error', onError);
 
-      var errorMessage = document.querySelector('#error')
-        .content
-        .querySelector('.error')
-        .cloneNode(true);
+    xhr.open(method, url);
 
-      main.insertBefore(errorMessage, notice);
-    });
+    if (method === METHOD_GET) {
+      xhr.send();
+    } else {
+      xhr.send(data);
+    }
+  };
 
-    xhr.open('GET', GET_URL);
-    xhr.send();
+  var load = function (onSuccess, onError) {
+    createXhr(METHOD_GET, URL_GET, onSuccess, onError);
   };
 
   var save = function (data, onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onSuccess(xhr.response);
-      } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-
-    xhr.open('POST', POST_URL);
-    xhr.send(data);
+    createXhr(METHOD_POST, URL_POST, onSuccess, onError, data);
   };
 
   window.backend = {
