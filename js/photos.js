@@ -13,52 +13,52 @@
   var imageUploadChooserElem = adFormContainerElem.querySelector('.ad-form__upload input[type=file]');
   var imageUploadPreviewElem = adFormContainerElem.querySelector('.ad-form__photo');
 
-  var onAvatarChooserChange = function () {
-    var file = avatarChooserElem.files[0];
-    var fileName = file.name.toLowerCase();
+  var isFileMatchExt = function (file) {
 
-    var matches = FILE_TYPES.some(function (it) {
+    var fileName = file.name.toLowerCase();
+    return FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
+  };
 
-    if (matches) {
+  var loadImage = function (file, callback) {
+
+    if (isFileMatchExt(file)) {
       var reader = new FileReader();
+      var onImageLoad = function () {
+        callback(reader.result);
+      };
 
-      reader.addEventListener('load', function () {
-        avatarPreviewElem.src = reader.result;
-      });
-
+      reader.addEventListener('load', onImageLoad);
       reader.readAsDataURL(file);
     }
+  };
+
+  var onAvatarChooserChange = function () {
+    var file = avatarChooserElem.files[0];
+
+    loadImage(file, function (imageSrc) {
+      avatarPreviewElem.src = imageSrc;
+    });
+  };
+
+  var onImageUploadChooserChange = function () {
+
+    var file = imageUploadChooserElem.files[0];
+
+    loadImage(file, function (imageSrc) {
+      var img = document.createElement('img');
+      imageUploadPreviewElem.appendChild(img);
+
+      img.src = imageSrc;
+      img.width = PHOTO_SIZE;
+      img.height = PHOTO_SIZE;
+      img.alt = PHOTO_ALT;
+    });
   };
 
   var clearAvatar = function () {
     avatarPreviewElem.src = DEFAULT_AVATAR_SRC;
-  };
-
-  var onImageUploadChooserChange = function () {
-    var file = imageUploadChooserElem.files[0];
-    var fileName = file.name.toLowerCase();
-
-    var matches = FILE_TYPES.some(function (it) {
-      return fileName.endsWith(it);
-    });
-
-    if (matches) {
-      var img = document.createElement('img');
-      imageUploadPreviewElem.appendChild(img);
-
-      var reader = new FileReader();
-
-      reader.addEventListener('load', function () {
-        img.src = reader.result;
-        img.width = PHOTO_SIZE;
-        img.height = PHOTO_SIZE;
-        img.alt = PHOTO_ALT;
-      });
-
-      reader.readAsDataURL(file);
-    }
   };
 
   var clearPreviewImages = function () {
