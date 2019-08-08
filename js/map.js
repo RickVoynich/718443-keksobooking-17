@@ -7,7 +7,6 @@
   window.pins = [];
 
   var onDataLoad = (function (data) {
-    window.pins = data;
     window.pins = data.map(function (pin, i) {
       pin.id = i;
       return pin;
